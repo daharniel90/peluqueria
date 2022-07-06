@@ -175,6 +175,7 @@
   <!-- Main Sidebar Container -->
   <?php include("./components/commons/sideBarComponent.php")?>
 
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -204,7 +205,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>160</h3>
 
                 <p>Cortes</p>
               </div>
