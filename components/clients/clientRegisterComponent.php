@@ -19,7 +19,13 @@
 </head>
 
 
-<body class="hold-transition register-page">
+<body>
+<?php include("./../../components/commons/menuComponent.php")?>
+<?php include("./../../components/commons/sideBarComponent.php")?>
+  <div class="hold-transition register-page">
+
+
+
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
@@ -86,16 +92,6 @@
         </div>
       </form>
 
-      <div class="social-auth-links text-center">
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i>
-          Iniciar con Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i>
-          Iniciar con Google
-        </a>
-      </div>
 
       <a href="login.html" class="text-center">Ya tengo una cuenta</a>
     </div>
@@ -103,6 +99,7 @@
   </div><!-- /.card -->
 </div>
 <!-- /.register-box -->
+</div> 
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -114,5 +111,9 @@
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+
+<!-- footer -->
+<?php include("./../../components/commons/footerComponent.php")?>
 </body>
+
 </html>

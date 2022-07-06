@@ -19,13 +19,18 @@
 
 </head>
 <body>
+<?php include("./../../components/commons/sideBarComponent.php")?>
+
+<?php include("./../../components/commons/menuComponent.php")?>
+
+<div class="content-wrapper">
   <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de usuarios</h3>
+                  <h3 class="card-title">Listado de roles</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -58,6 +63,7 @@
           </div>
         </div>
   </section>
+</div>
 </body>
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

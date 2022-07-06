@@ -84,25 +84,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./components/users/userRegisterComponent.php" class="nav-link">
+                <a href="/peluqueria/components/users/userRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registrar Usuario</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="/peluqueria/components/users/userListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado de usuarios</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/boxed.html" class="nav-link">
+                <a href="/peluqueria/components/users/roles/rolRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registrar rol</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/fixed-sidebar.html" class="nav-link">
+                <a href="/peluqueria/components/users/roles/rolListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Lista de roles</p>
                 </a>
@@ -143,7 +143,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="/peluqueria/components/clients/clientRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registro</p>
                 </a>
