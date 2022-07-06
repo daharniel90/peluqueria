@@ -31,7 +31,7 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="./logo peluqueria.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="./logo-peluqueria.png" alt="AdminLTELogo" width="200">
   </div>
 
   <!-- Navbar -->
