@@ -19,6 +19,9 @@
 
 </head>
 <body>
+<?php include("./../../components/commons/sideBarComponent.php")?>
+
+<?php include("./../../components/commons/menuComponent.php")?>
   <section class="content">
         <div class="container-fluid">
           <div class="row">
