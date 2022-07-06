@@ -16,6 +16,8 @@
 </head>
 <body>
 
+<!-- Main Sidebar Container -->
+<?php include("./../../components/commons/sideBarComponent.php")?>
  
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
