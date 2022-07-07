@@ -149,7 +149,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="/peluqueria/components/clients/clientListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado</p>
                 </a>
@@ -178,25 +178,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/UI/general.html" class="nav-link">
+                <a href="/peluqueria/components/services/serviceRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registrar servicio</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/icons.html" class="nav-link">
+                <a href="/peluqueria/components/services/serviceListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/buttons.html" class="nav-link">
+                <a href="/peluqueria/components/services/typeServices/typeServiceRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registrar tipo de servicios</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/sliders.html" class="nav-link">
+                <a href="/peluqueria/components/services/typeServices/typeServiceListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado tipo de servicios</p>
                 </a>
@@ -237,37 +237,37 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/forms/general.html" class="nav-link">
+                <a href="/peluqueria/components/payments/paymentMethods/paymentMethodsRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registrar metodos de pago</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/advanced.html" class="nav-link">
+                <a href="/peluqueria/components/payments/paymentMethods/paymentMethodsListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado de metodos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
+                <a href="/peluqueria/components/payments/paymentQuote/paymentQuoteRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registar cotizacion</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
+                <a href="/peluqueria/components/payments/paymentQuote/paymentQuoteListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado cotizaciones</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
+                <a href="/peluqueria/components/payments/paymentsClientListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado pago clientes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
+                <a href="/peluqueria/components/payments/paymentsEmployeeListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado pago empleados</p>
                 </a>
@@ -284,7 +284,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
+                <a href="/peluqueria/components/contracts/contractsListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado de contratos</p>
                 </a>
