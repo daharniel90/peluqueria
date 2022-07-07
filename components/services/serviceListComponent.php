@@ -22,6 +22,8 @@
 <?php include("./../../components/commons/sideBarComponent.php")?>
 
 <?php include("./../../components/commons/menuComponent.php")?>
+<div class="content-wrapper">
+
   <section class="content">
         <div class="container-fluid">
           <div class="row">
@@ -61,6 +63,10 @@
           </div>
         </div>
   </section>
+
+</div>
+<!-- Footer -->
+<?php include("./../../components/commons/footerComponent.php")?>
 </body>
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

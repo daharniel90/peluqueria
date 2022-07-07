@@ -15,10 +15,10 @@
 
 </head>
 <body>
-
+<?php include("./../../components/commons/menuComponent.php")?>
 <?php include("./../../components/commons/sideBarComponent.php")?>
 
-<?php include("./../../components/commons/menuComponent.php")?>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -26,7 +26,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro de usuario</h1>
+            <h1>Registro de servicios</h1>
           </div>
         </div>
       </div>
@@ -74,6 +74,8 @@
     </section>
     <!-- /.content -->
   </div>
+  <!-- footer -->
+  <?php include("./../../components/commons/footerComponent.php")?>
 </body>
 
 <!-- jQuery -->
