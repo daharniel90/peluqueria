@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
 
-     <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
-
-</head>
-
-
-<body>
 <?php include("./../../components/commons/menuComponent.php")?>
 <?php include("./../../components/commons/sideBarComponent.php")?>
   <div class="hold-transition register-page">
@@ -75,15 +54,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-              <label for="agreeTerms">
-               Acepto los <a href="#">terminos</a>
-              </label>
-            </div>
-          </div>
+       
           <!-- /.col -->
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Registrar</button>
@@ -93,7 +64,7 @@
       </form>
 
 
-      <a href="login.html" class="text-center">Ya tengo una cuenta</a>
+      <a href="/peluqueria/components/users/loginComponent.php" class="text-center">Ya tengo una cuenta</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
