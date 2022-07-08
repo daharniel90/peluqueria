@@ -8,7 +8,7 @@
           <div class="col-6 offset-3">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Clientes</h3>
+                <h1 class="card-title">Clientes</h1>
               </div>
               <!-- /.card-header -->
               
