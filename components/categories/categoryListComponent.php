@@ -19,9 +19,9 @@
 
 </head>
 <body>
-<?php include("./../../../components/commons/sideBarComponent.php")?>
+<?php include("./../../components/commons/sideBarComponent.php")?>
 
-<?php include("./../../../components/commons/menuComponent.php")?>
+<?php include("./../../components/commons/menuComponent.php")?>
 
 <div class="content-wrapper">
   <section class="content">
@@ -30,7 +30,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de tipos de servicios</h3>
+                  <h3 class="card-title">Listado de tipos de categoria</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -65,7 +65,7 @@
   </section>
 </div>
 <!-- Footer -->
-<?php include("./../../../components/commons/footerComponent.php")?>
+<?php include("./../../components/commons/footerComponent.php")?>
 </body>
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
