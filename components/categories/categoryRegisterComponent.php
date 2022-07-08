@@ -16,6 +16,27 @@
 </head>
 <body>
 
+<?php
+$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
+$db=mysql_select_db('hair_salon', $connect);
+
+if($db){  
+
+  $sql="SELECT * FROM categories";
+  $query_categories=mysql_query($sql); 
+  $count_categories = mysql_num_rows($query_categories); 
+
+
+  if($count_categories == 0){
+    $sql="INSERT INTO categories (name , create_at ) VALUES ('$name', $create_at)";
+    $insert_categories= mysql_query($sql);
+}
+}
+
+
+
+?>
+
 <?php include("./../../components/commons/sideBarComponent.php")?>
 
 <?php include("./../../components/commons/menuComponent.php")?>
@@ -36,6 +57,8 @@
               <form id="quickForm">
                 <div class="card-body">
                 <div class="form-group">
+                  <?php
+                  while($categories=mysql_fetch_array($query_categories)){?>
                     <label for="exampleInputEmail1">Nombre</label>
                     <input type="text" name="nameU" class="form-control" id="" placeholder="Nombre">
                   </div>
@@ -56,6 +79,7 @@
                       <input type="checkbox" name="terms" class="custom-control-input" id="">
                       <label class="custom-control-label" for="exampleCheck1">Acepto los<a href="#">terminos</a>.</label>
                     </div>
+                    <?php }?>
                   </div>
                 </div>
                 <!-- /.card-body -->
