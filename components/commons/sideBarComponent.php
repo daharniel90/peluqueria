@@ -189,16 +189,16 @@
                   <p>Listado</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/peluqueria/components/services/typeServices/typeServiceRegisterComponent.php" class="nav-link">
+            <li class="nav-item">
+                <a href="/peluqueria/components/categories/categoryRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registrar tipo de servicios</p>
+                  <p>Registrar categoria</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/peluqueria/components/services/typeServices/typeServiceListComponent.php" class="nav-link">
+                <a href="/peluqueria/components/categories/categoryListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado tipo de servicios</p>
+                  <p>Listado de categoria</p>
                 </a>
               </li>
               <!--li class="nav-item">
@@ -288,19 +288,21 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado de contratos</p>
                 </a>
+              <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/peluqueria/components/contracts/contractsRegisterComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p></p>
+                </a>
               </li>
-              <!--li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
+            </ul>
+          </li>
+          <li class="nav-item">
+                <a href="/peluqueria/components/contracts/contractsRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
+                  <p>Registro de contrato</p>
                 </a>
-              </li-->
-              <!--li class="nav-item">
-                <a href="pages/tables/jsgrid.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
-                </a>
-              </li-->
+              </li>
             </ul>
           </li>
           <!--li class="nav-header">EXAMPLES</li>
@@ -557,7 +559,7 @@
                 </a>
               </li>
             </ul>
-          </li-->
+          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-search"></i>
@@ -572,15 +574,8 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Simple Search</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/search/enhanced.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Enhanced</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+              </li-->
+              
           <!--li class="nav-header">MISCELLANEOUS</li-->
           <!--li class="nav-item">
             <a href="iframe.html" class="nav-link">

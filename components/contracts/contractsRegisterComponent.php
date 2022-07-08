@@ -15,10 +15,10 @@
 
 </head>
 <body>
+<?php include("./../../components/commons/menuComponent.php")?>
+<?php include("./../../components/commons/sideBarComponent.php")?>
 
-<?php include("./../../../components/commons/sideBarComponent.php")?>
 
-<?php include("./../../../components/commons/menuComponent.php")?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -26,7 +26,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro tipo de usuario</h1>
+            <h1>Registro de contrato</h1>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
                   <div class="form-group mb-0">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="terms" class="custom-control-input" id="">
-                      <label class="custom-control-label" for="exampleCheck1">Acepto los<a href="#">terminos</a>.</label>
+                      <label class="custom-control-label" for="exampleCheck1">Acepto los <a href="#">terminos</a>.</label>
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
     <!-- /.content -->
   </div>
   <!-- Footer -->
-<?php include("./../../../components/commons/footerComponent.php")?>
+<?php include("./../../components/commons/footerComponent.php")?>
 </body>
 
 <!-- jQuery -->
