@@ -26,7 +26,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro de usuario</h1>
+            <h1>Registro de categoria</h1>
           </div>
         </div>
       </div>
@@ -74,6 +74,8 @@
     </section>
     <!-- /.content -->
   </div>
+  <!-- Footer -->
+<?php include("./../../components/commons/footerComponent.php")?>
 </body>
 
 <!-- jQuery -->
