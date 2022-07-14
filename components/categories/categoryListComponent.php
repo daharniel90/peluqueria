@@ -1,24 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
+<?php
+ error_reporting(E_ALL);
 
-    <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
+$db=mysql_select_db('peluqueria', $connect);
 
-</head>
-<body>
+if($db){
+
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $sql="DELETE FROM categories WHERE id=$id";
+    $query_categories_delete= mysql_query($sql);
+  }
+
+  $sql= "SELECT * FROM categories";
+  $query_categories= mysql_query($sql);
+}
+?>
+
 <?php include("./../../components/commons/sideBarComponent.php")?>
 
 <?php include("./../../components/commons/menuComponent.php")?>
@@ -30,31 +28,40 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de tipos de categoria</h3>
+                  <h3 class="card-title">Listado de categorias</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
-                    <thead>
+                    
                     <tr>
-                      <th>Rendering engine</th>
-                      <th>Browser</th>
-                      <th>Platform(s)</th>
-                      <th>Engine version</th>
-                      <th>CSS grade</th>
+                      <td>Nombre</td>
+                      <td>Fecha de creacion</td>
+                      <td>Editar</td>
+                      <td>Eliminar</td>
                     </tr>
-                    </thead>
-                    <tbody>
+
+                    <?php 
+                      while($categories=mysql_fetch_array($query_categories)){
+                    ?>
                     <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 4.0
+                      <td><? echo $categories["name"]?></td>
+                      <td><? echo $categories["date"]?></td>
+                      <td>
+                        <i class="fas fa-edit"></i>
                       </td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                      <td>X</td>
+                      <td>
+                        <form id="delete" action="?" method="post">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
+                          <i onclick="delete_()" class="fas fa-trash"></i>
+                        </form>
+                      </td>
                     </tr>
-                    </tfoot>
+                    <?php } ?>
+                   
+                   
+                    
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -64,6 +71,13 @@
         </div>
   </section>
 </div>
+<script>
+  function delete_(){
+    if(confirm("Estas seguro de eliminar esta categoria ?")){
+      $("#delete").submit();
+    }  
+  }
+</script>
 <!-- Footer -->
 <?php include("./../../components/commons/footerComponent.php")?>
 </body>
