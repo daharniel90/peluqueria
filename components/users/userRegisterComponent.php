@@ -50,7 +50,7 @@ if(isset($_POST['submit'])){
       <div class="container-fluid">
         <div class="row mb-6">
           <div class="col-sm-6">
-            <h1>Registro de usuariosssssss</h1>
+            <h1>Registro de usuarios</h1>
           </div>
         </div>
       </div>
