@@ -13,7 +13,6 @@ SET time_zone = "+00:00";
 
 
 
-
 --
 -- Database: `hair_salon`
 --
@@ -42,7 +41,11 @@ CREATE TABLE `assistance` (
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+<<<<<<< HEAD
+  `date` datetime NOT NULL
+=======
   `date` timestamp NOT NULL
+>>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -69,7 +72,11 @@ CREATE TABLE `invoices` (
   `id` int(11) NOT NULL,
   `id_client` int(11) NOT NULL,
   `id_quote` int(11) NOT NULL,
+<<<<<<< HEAD
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+>>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -84,7 +91,11 @@ CREATE TABLE `payment_client_service` (
   `id_payment_method` int(11) NOT NULL,
   `id_client` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
+<<<<<<< HEAD
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+>>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -96,7 +107,11 @@ CREATE TABLE `payment_client_service` (
 CREATE TABLE `payment_methods` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+<<<<<<< HEAD
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+>>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -110,7 +125,11 @@ CREATE TABLE `payment_users_service` (
   `id_service_contract` int(11) NOT NULL,
   `id_payment_method` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
+<<<<<<< HEAD
+  `date` datetime NOT NULL,
+=======
   `date` timestamp NOT NULL,
+>>>>>>> origin/genesis_sanchez
   `observations` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -123,7 +142,11 @@ CREATE TABLE `payment_users_service` (
 CREATE TABLE `quote` (
   `id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
+<<<<<<< HEAD
+  `date` datetime NOT NULL
+=======
   `date` timestamp NOT NULL
+>>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -147,7 +170,11 @@ CREATE TABLE `roles` (
 CREATE TABLE `services` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+<<<<<<< HEAD
+  `date` datetime NOT NULL,
+=======
   `date` timestamp NOT NULL,
+>>>>>>> origin/genesis_sanchez
   `id_category` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -162,7 +189,11 @@ CREATE TABLE `service_contract` (
   `id_user` int(11) NOT NULL,
   `id_service` int(11) NOT NULL,
   `id_quote` int(11) NOT NULL,
+<<<<<<< HEAD
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+>>>>>>> origin/genesis_sanchez
   `observations` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -175,7 +206,11 @@ CREATE TABLE `service_contract` (
 CREATE TABLE `service_detail` (
   `id` int(11) NOT NULL,
   `id_service` int(11) NOT NULL,
+<<<<<<< HEAD
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+>>>>>>> origin/genesis_sanchez
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -195,7 +230,11 @@ CREATE TABLE `users` (
   `email` text COLLATE utf8_spanish_ci NOT NULL,
   `user_name` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
+<<<<<<< HEAD
+  `created_at` datetime DEFAULT current_timestamp(),
+=======
   `created_at` timestamp DEFAULT current_timestamp(),
+>>>>>>> origin/genesis_sanchez
   `id_user_rol` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 1,
   `deleted` tinyint(1) NOT NULL DEFAULT 0
@@ -211,6 +250,14 @@ CREATE TABLE `user_role` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL,
+<<<<<<< HEAD
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Indexes for dumped tables
+--
+=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -468,4 +515,258 @@ ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
+>>>>>>> origin/genesis_sanchez
 
+--
+-- Indexes for table `assistance`
+--
+ALTER TABLE `assistance`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_client` (`id_client`),
+  ADD KEY `id_quote` (`id_quote`);
+
+--
+-- Indexes for table `payment_client_service`
+--
+ALTER TABLE `payment_client_service`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_service_contract` (`id_service_contract`),
+  ADD KEY `id_payment_method` (`id_payment_method`),
+  ADD KEY `id_client` (`id_client`);
+
+--
+-- Indexes for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payment_users_service`
+--
+ALTER TABLE `payment_users_service`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_service_contract` (`id_service_contract`),
+  ADD KEY `id_payment_method` (`id_payment_method`);
+
+--
+-- Indexes for table `quote`
+--
+ALTER TABLE `quote`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_category` (`id_category`);
+
+--
+-- Indexes for table `service_contract`
+--
+ALTER TABLE `service_contract`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_service` (`id_service`),
+  ADD KEY `id_quote` (`id_quote`);
+
+--
+-- Indexes for table `service_detail`
+--
+ALTER TABLE `service_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_service` (`id_service`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_name` (`user_name`),
+  ADD UNIQUE KEY `dni` (`dni`),
+  ADD UNIQUE KEY `email` (`email`) USING HASH;
+
+--
+-- Indexes for table `user_role`
+--
+ALTER TABLE `user_role`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_rol` (`id_rol`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `assistance`
+--
+ALTER TABLE `assistance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment_client_service`
+--
+ALTER TABLE `payment_client_service`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment_users_service`
+--
+ALTER TABLE `payment_users_service`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `quote`
+--
+ALTER TABLE `quote`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `service_contract`
+--
+ALTER TABLE `service_contract`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `service_detail`
+--
+ALTER TABLE `service_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_role`
+--
+ALTER TABLE `user_role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `assistance`
+--
+ALTER TABLE `assistance`
+  ADD CONSTRAINT `assistance_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`id_client`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`id_quote`) REFERENCES `quote` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `payment_client_service`
+--
+ALTER TABLE `payment_client_service`
+  ADD CONSTRAINT `payment_client_service_ibfk_1` FOREIGN KEY (`id_client`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payment_client_service_ibfk_2` FOREIGN KEY (`id_payment_method`) REFERENCES `payment_methods` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payment_client_service_ibfk_3` FOREIGN KEY (`id_service_contract`) REFERENCES `service_contract` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `payment_users_service`
+--
+ALTER TABLE `payment_users_service`
+  ADD CONSTRAINT `payment_users_service_ibfk_1` FOREIGN KEY (`id_payment_method`) REFERENCES `payment_methods` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payment_users_service_ibfk_2` FOREIGN KEY (`id_service_contract`) REFERENCES `service_contract` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `services`
+--
+ALTER TABLE `services`
+  ADD CONSTRAINT `services_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `service_contract`
+--
+ALTER TABLE `service_contract`
+  ADD CONSTRAINT `service_contract_ibfk_1` FOREIGN KEY (`id_quote`) REFERENCES `quote` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `service_contract_ibfk_2` FOREIGN KEY (`id_service`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `service_contract_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `service_detail`
+--
+ALTER TABLE `service_detail`
+  ADD CONSTRAINT `service_detail_ibfk_1` FOREIGN KEY (`id_service`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_role`
+--
+ALTER TABLE `user_role`
+  ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
