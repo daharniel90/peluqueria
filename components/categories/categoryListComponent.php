@@ -5,8 +5,15 @@ $connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
 $db=mysql_select_db('peluqueria', $connect);
 
 if($db){
+
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $sql="DELETE FROM categories WHERE id=$id";
+    $query_categories_delete= mysql_query($sql);
+  }
+
   $sql= "SELECT * FROM categories";
-  $query_categories= mysql_query($sql);  
+  $query_categories= mysql_query($sql);
 }
 ?>
 
@@ -41,15 +48,17 @@ if($db){
                       <td><? echo $categories["name"]?></td>
                       <td><? echo $categories["date"]?></td>
                       <td>
-                        <i class="fas fa-user-edit"></i>
+                        <i class="fas fa-edit"></i>
                       </td>
                       <td>
-                        <i class="fas fa-user-times"></i>
+                        <form id="delete" action="?" method="post">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
+                          <i onclick="delete_()" class="fas fa-trash"></i>
+                        </form>
                       </td>
                     </tr>
-                    <?php 
-
-                      } ?>
+                    <?php } ?>
                    
                    
                     
@@ -62,6 +71,13 @@ if($db){
         </div>
   </section>
 </div>
+<script>
+  function delete_(){
+    if(confirm("Estas seguro de eliminar esta categoria ?")){
+      $("#delete").submit();
+    }  
+  }
+</script>
 <!-- Footer -->
 <?php include("./../../components/commons/footerComponent.php")?>
 </body>

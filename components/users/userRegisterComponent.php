@@ -81,7 +81,7 @@ if(isset($_POST['submit'])){
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail">Email</label>
-                    <input type="text" name="email" class="form-control" id="" placeholder="Email">  
+                    <input type="email" name="email" class="form-control" id="" placeholder="Email">  
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nombre de usuario</label>
@@ -89,7 +89,7 @@ if(isset($_POST['submit'])){
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Contraseña</label>
-                    <input type="text" name="password" class="form-control" id="" placeholder="Contraseña">  
+                    <input type="password" name="password" class="form-control" id="" placeholder="Contraseña">  
                 </div>
                 </div>
                 <!-- /.card-body -->

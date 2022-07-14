@@ -15,11 +15,11 @@ if($db){
   $sql= "SELECT * FROM users";
   $query_users= mysql_query($sql); 
 
-  if($query_users){
+  /*if($query_users){
     alert("usuario eliminado");
   }else{
     alert("No se se pudo elimiar el usuario");
-  }
+  }*/
 }
 ?>
 <?php include("./../../components/commons/sideBarComponent.php")?>
@@ -66,7 +66,7 @@ if($db){
                       <td>
                         <form id="delete" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $users["id"]?>">
+                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
                           <i onclick="delete_()" class="fas fa-user-times"></i>
                         </form>
                        
