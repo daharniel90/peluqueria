@@ -1,20 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
 
-     <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+<?php
+ error_reporting(E_ALL);
 
-</head>
-<body>
+ $connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
+ $db=mysql_select_db('peluqueria', $connect);
+
+ if(isset($_POST['submit'])){
+   $name=$_POST['name'];
+ 
+    if($db){  
+      $sql="INSERT INTO services (name) VALUES ('$name')";
+      $insert_services= mysql_query($sql);
+        
+        if($insert_services){
+          ?>
+          <div class="alert alert-success" role="alert">
+          Servicio registrado con exito!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+          </div>
+
+          <?php
+        }else{
+          ?>
+          <div class="alert alert-dismissible alert-danger" role="alert">
+          Error al registrar el servicio.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+          </div>
+          <?php
+        }
+    }
+  }
+?>
+
+
+
+
+
+
+
 <?php include("./../../components/commons/menuComponent.php")?>
 <?php include("./../../components/commons/sideBarComponent.php")?>
 
@@ -33,34 +56,17 @@
     </section>
 
               <!-- form start -->
-              <form id="quickForm">
+              <form id="quickForm" method="post" action="?">
                 <div class="card-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" name="nameU" class="form-control" id="" placeholder="Nombre">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Apellido</label>
-                    <input type="text" name="LnameU" class="form-control" id="" placeholder="Apellido">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-                    <input type="email" name="email" class="form-control" id="" placeholder="Email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Contraseña</label>
-                    <input type="password" name="password" class="form-control" id="" placeholder="Contraseña">
-                  </div>
-                  <div class="form-group mb-0">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="terms" class="custom-control-input" id="">
-                      <label class="custom-control-label" for="exampleCheck1">Acepto los<a href="#">terminos</a>.</label>
-                    </div>
-                  </div>
+                    <input type="text" name="name" class="form-control" id="" placeholder="Nombre">
+                    
+                </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Enviar</button>
+                  <input type="submit" name="submit" class="btn btn-primary" value="Registrar">
                 </div>
               </form>
             </div>

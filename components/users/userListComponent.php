@@ -1,24 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
+<?php
+ error_reporting(E_ALL);
 
-    <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
+$db=mysql_select_db('peluqueria', $connect);
 
-</head>
-<body>
+if($db){ 
+
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $sql="DELETE FROM users WHERE id=$id";
+    $query_users_delete= mysql_query($sql);
+  }
+
+  $sql= "SELECT * FROM users";
+  $query_users= mysql_query($sql); 
+
+  if($query_users){
+    alert("usuario eliminado");
+  }else{
+    alert("No se se pudo elimiar el usuario");
+  }
+}
+?>
 <?php include("./../../components/commons/sideBarComponent.php")?>
 
 <?php include("./../../components/commons/menuComponent.php")?>
@@ -35,26 +38,44 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
-                    <thead>
                     <tr>
-                      <th>Rendering engine</th>
-                      <th>Browser</th>
-                      <th>Platform(s)</th>
-                      <th>Engine version</th>
-                      <th>CSS grade</th>
+                      <td>Nombre</td>
+                      <td>Apellido</td>
+                      <td>Cedula</td>
+                      <td>Telefono</td>
+                      <td>Direccion</td>
+                      <td>Email</td>
+                      <td>Fecha de creacion</td>
+                      <td>Editar</td>
+                      <td>Eliminar</td>
                     </tr>
-                    </thead>
-                    <tbody>
+                    <?php 
+                      while($users=mysql_fetch_array($query_users)){
+                    ?>
                     <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 4.0
+                      <td><? echo $users["name"]?></td>
+                      <td><? echo $users["lastname"]?></td>
+                      <td><? echo $users["dni"]?></td>
+                      <td><? echo $users["phone"]?></td>
+                      <td><? echo $users["address"]?></td>
+                      <td><? echo $users["email"]?></td>
+                      <td><? echo $users["created_at"]?></td>
+                      <td>
+                        <i class="fas fa-user-edit"></i>
                       </td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                      <td>X</td>
+                      <td>
+                        <form id="delete" action="?" method="post">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<? echo $users["id"]?>">
+                          <i onclick="delete_()" class="fas fa-user-times"></i>
+                        </form>
+                       
+                      </td>
                     </tr>
-                    </tfoot>
+                    <?php 
+
+                      } ?>
+                    
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -64,6 +85,14 @@
         </div>
   </section>
 </div>
+
+<script>
+  function delete_(){
+    if(confirm("Estas seguro de eliminar a este usuario?")){
+      $("#delete").submit();
+    }  
+  }
+</script>
 </body>
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
