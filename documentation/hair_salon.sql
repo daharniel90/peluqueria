@@ -41,11 +41,7 @@ CREATE TABLE `assistance` (
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-<<<<<<< HEAD
-  `date` datetime NOT NULL
-=======
   `date` timestamp NOT NULL
->>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -72,11 +68,7 @@ CREATE TABLE `invoices` (
   `id` int(11) NOT NULL,
   `id_client` int(11) NOT NULL,
   `id_quote` int(11) NOT NULL,
-<<<<<<< HEAD
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
->>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -91,11 +83,7 @@ CREATE TABLE `payment_client_service` (
   `id_payment_method` int(11) NOT NULL,
   `id_client` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
-<<<<<<< HEAD
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
->>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -107,11 +95,7 @@ CREATE TABLE `payment_client_service` (
 CREATE TABLE `payment_methods` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-<<<<<<< HEAD
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
->>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -125,11 +109,7 @@ CREATE TABLE `payment_users_service` (
   `id_service_contract` int(11) NOT NULL,
   `id_payment_method` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
-<<<<<<< HEAD
-  `date` datetime NOT NULL,
-=======
   `date` timestamp NOT NULL,
->>>>>>> origin/genesis_sanchez
   `observations` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -142,11 +122,7 @@ CREATE TABLE `payment_users_service` (
 CREATE TABLE `quote` (
   `id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
-<<<<<<< HEAD
-  `date` datetime NOT NULL
-=======
   `date` timestamp NOT NULL
->>>>>>> origin/genesis_sanchez
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -170,11 +146,7 @@ CREATE TABLE `roles` (
 CREATE TABLE `services` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-<<<<<<< HEAD
-  `date` datetime NOT NULL,
-=======
   `date` timestamp NOT NULL,
->>>>>>> origin/genesis_sanchez
   `id_category` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -189,11 +161,7 @@ CREATE TABLE `service_contract` (
   `id_user` int(11) NOT NULL,
   `id_service` int(11) NOT NULL,
   `id_quote` int(11) NOT NULL,
-<<<<<<< HEAD
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
->>>>>>> origin/genesis_sanchez
   `observations` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -206,11 +174,7 @@ CREATE TABLE `service_contract` (
 CREATE TABLE `service_detail` (
   `id` int(11) NOT NULL,
   `id_service` int(11) NOT NULL,
-<<<<<<< HEAD
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
->>>>>>> origin/genesis_sanchez
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -230,11 +194,7 @@ CREATE TABLE `users` (
   `email` text COLLATE utf8_spanish_ci NOT NULL,
   `user_name` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
-<<<<<<< HEAD
-  `created_at` datetime DEFAULT current_timestamp(),
-=======
   `created_at` timestamp DEFAULT current_timestamp(),
->>>>>>> origin/genesis_sanchez
   `id_user_rol` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 1,
   `deleted` tinyint(1) NOT NULL DEFAULT 0
@@ -250,14 +210,6 @@ CREATE TABLE `user_role` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL,
-<<<<<<< HEAD
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Indexes for dumped tables
---
-=======
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -515,7 +467,6 @@ ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
->>>>>>> origin/genesis_sanchez
 
 --
 -- Indexes for table `assistance`
