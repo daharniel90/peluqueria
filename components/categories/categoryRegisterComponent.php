@@ -1,40 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
-
-     <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
-</head>
-<body>
-
 <?php
-$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
-$db=mysql_select_db('hair_salon', $connect);
+ error_reporting(E_ALL);
+ echo $_POST['name'];
+ $connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
+ $db=mysql_select_db('peluqueria', $connect);
 
-if($db){  
-
-  $sql="SELECT * FROM categories";
-  $query_categories=mysql_query($sql); 
-  $count_categories = mysql_num_rows($query_categories); 
-
-
-  if($count_categories == 0){
-    $sql="INSERT INTO categories (name , create_at ) VALUES ('$name', $create_at)";
-    $insert_categories= mysql_query($sql);
+if(isset($_POST['submit'])){
+   $name=$_POST['name'];
+ echo $name;
+  if($db){  
+      $sql="INSERT INTO categories (name) VALUES ('$name')";
+      $insert_categories= mysql_query($sql);
+      
+      if($insert_categories){
+        ?>
+        <div class="alert alert-success" role="alert">
+        Categoria registrada con exito!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+        
+        </div>
+        <?php
+      }else{
+        ?>
+        <div class="alert alert-dismissible alert-danger" role="alert">
+        Error al registrar la categoria.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+        </div>
+        <?php
+      }
+  }
 }
-}
-
-
-
 ?>
 
 <?php include("./../../components/commons/sideBarComponent.php")?>
@@ -54,37 +48,19 @@ if($db){
     </section>
 
               <!-- form start -->
-              <form id="quickForm">
+              <form id="quickForm" method="post" action="?">
                 <div class="card-body">
                 <div class="form-group">
-                  <?php
-                  while($categories=mysql_fetch_array($query_categories)){?>
+                 
+          
                     <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" name="nameU" class="form-control" id="" placeholder="Nombre">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Apellido</label>
-                    <input type="text" name="LnameU" class="form-control" id="" placeholder="Apellido">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-                    <input type="email" name="email" class="form-control" id="" placeholder="Email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Contraseña</label>
-                    <input type="password" name="password" class="form-control" id="" placeholder="Contraseña">
-                  </div>
-                  <div class="form-group mb-0">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="terms" class="custom-control-input" id="">
-                      <label class="custom-control-label" for="exampleCheck1">Acepto los<a href="#">terminos</a>.</label>
-                    </div>
-                    <?php }?>
+                    <input type="text" name="name"  class="form-control" id="" placeholder="Nombre">
+                  
                   </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Enviar</button>
+                <div class="">
+                  <input type="submit" class="btn btn-primary" name="submit" value="Registrar">
                 </div>
               </form>
             </div>
@@ -114,50 +90,6 @@ if($db){
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- Page specific script -->
-<script>
-$(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
-  $('#quickForm').validate({
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      terms: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a valid email address"
-      },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
-      },
-      terms: "Please accept our terms"
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});
-</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>1
 </html>
