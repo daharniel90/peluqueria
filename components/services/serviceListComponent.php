@@ -1,20 +1,28 @@
 
 <?php
- error_reporting(E_ALL);
 
-$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
-$db=mysql_select_db('peluqueria', $connect);
+error_reporting(E_ALL);
 
-if($db){
+$servername = "localhost";
+$username = "genesis";
+$password = "1234567890";
+$dbname = "peluqueria";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+}else{
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
     $sql="DELETE FROM services WHERE id=$id";
-    $query_services_delete= mysql_query($sql);
+    $query_services_delete = mysqli_query($conn, $sql);
   }
 
   $sql= "SELECT * FROM services";
-  $query_services= mysql_query($sql);
+  $query_services= mysqli_query($conn, $sql);
 }
 ?>
 
@@ -41,7 +49,7 @@ if($db){
                       <td>Eliminar</td>
                     </tr>
                     <?php 
-                      while($services=mysql_fetch_array($query_services)){
+                      while($services=mysqli_fetch_array($query_services)){
                     ?>
                     <tr>
                       <td><? echo $services["name"]?></td>

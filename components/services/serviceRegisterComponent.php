@@ -1,16 +1,24 @@
 
 <?php
- error_reporting(E_ALL);
+error_reporting(E_ALL);
 
- $connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
- $db=mysql_select_db('peluqueria', $connect);
+$servername = "localhost";
+$username = "genesis";
+$password = "1234567890";
+$dbname = "peluqueria";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
 
  if(isset($_POST['submit'])){
    $name=$_POST['name'];
  
-    if($db){  
+  if ($conn->connect_error) {
+    die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+  }else{  
       $sql="INSERT INTO services (name) VALUES ('$name')";
-      $insert_services= mysql_query($sql);
+      $insert_services= mysqli_query($conn, $sql);
         
         if($insert_services){
           ?>
