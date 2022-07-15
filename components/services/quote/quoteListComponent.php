@@ -1,34 +1,25 @@
-
 <?php
+ error_reporting(E_ALL);
 
-error_reporting(E_ALL);
+$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
+$db=mysql_select_db('peluqueria', $connect);
 
-$servername = "localhost";
-$username = "genesis";
-$password = "1234567890";
-$dbname = "peluqueria";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-}else{
+if($db){
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
-    $sql="DELETE FROM services WHERE id=$id";
-    $query_services_delete = mysqli_query($conn, $sql);
+    $sql="DELETE FROM quote WHERE id=$id";
+    $query_quote_delete= mysql_query($sql);
   }
 
-  $sql= "SELECT * FROM services";
-  $query_services= mysqli_query($conn, $sql);
+  $sql= "SELECT * FROM quote";
+  $query_quote= mysql_query($sql);
 }
 ?>
 
-<?php include("./../../components/commons/sideBarComponent.php")?>
+<?php include("./../../../components/commons/sideBarComponent.php")?>
 
-<?php include("./../../components/commons/menuComponent.php")?>
+<?php include("./../../../components/commons/menuComponent.php")?>
 <div class="content-wrapper">
 
   <section class="content">
@@ -37,30 +28,30 @@ if ($conn->connect_error) {
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de servicios</h3>
+                  <h3 class="card-title">Listado de cotizaciones</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                     <tr>
-                      <td>Nombre</td>
+                      <td>Monto</td>
                       <td>Fecha de creacion</td>
                       <td>Editar</td>
                       <td>Eliminar</td>
                     </tr>
                     <?php 
-                      while($services=mysqli_fetch_array($query_services)){
+                      while($quote=mysql_fetch_array($query_quote)){
                     ?>
                     <tr>
-                      <td><? echo $services["name"]?></td>
-                      <td><? echo $services["date"]?></td>
+                      <td><? echo $quote["amount"]?></td>
+                      <td><? echo $quote["date"]?></td>
                       <td>
                         <i class="fas fa-edit"></i>
                       </td>
                       <td>
                         <form id="delete" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $services["id"]?>">
+                          <input type="hidden" name="id" value="<? echo $quote["id"]?>">
                           <i onclick="delete_()" class="fas fa-trash"></i>
                         </form>
                       </td>
@@ -78,13 +69,13 @@ if ($conn->connect_error) {
 </div>
 <script>
   function delete_(){
-    if(confirm("Estas seguro de eliminar este servicio ?")){
+    if(confirm("Estas seguro de eliminar esta cotizacion?")){
       $("#delete").submit();
     }  
   }
 </script>
 <!-- Footer -->
-<?php include("./../../components/commons/footerComponent.php")?>
+<?php include("./../../../components/commons/footerComponent.php")?>
 </body>
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

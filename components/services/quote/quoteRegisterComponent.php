@@ -1,26 +1,17 @@
-
 <?php
-error_reporting(E_ALL);
+ error_reporting(E_ALL);
 
-$servername = "localhost";
-$username = "genesis";
-$password = "1234567890";
-$dbname = "peluqueria";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
+ $connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
+ $db=mysql_select_db('peluqueria', $connect);
 
  if(isset($_POST['submit'])){
-   $name=$_POST['name'];
+   $amount=$_POST['amount'];
  
-  if ($conn->connect_error) {
-    die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-  }else{  
-      $sql="INSERT INTO services (name) VALUES ('$name')";
-      $insert_services= mysqli_query($conn, $sql);
+    if($db){  
+      $sql="INSERT INTO quote (amount) VALUES ('$amount')";
+      $insert_quote= mysql_query($sql);
         
-        if($insert_services){
+        if($insert_quote){
           ?>
           <div class="alert alert-success" role="alert">
           Servicio registrado con exito!
@@ -46,8 +37,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 
 
-<?php include("./../../components/commons/menuComponent.php")?>
-<?php include("./../../components/commons/sideBarComponent.php")?>
+<?php include("./../../../components/commons/menuComponent.php")?>
+<?php include("./../../../components/commons/sideBarComponent.php")?>
 
 
   <!-- Content Wrapper. Contains page content -->
@@ -57,7 +48,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro de servicios</h1>
+            <h1>Registro de cotizaciones</h1>
           </div>
         </div>
       </div>
@@ -67,8 +58,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
               <form id="quickForm" method="post" action="?">
                 <div class="card-body">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" name="name" class="form-control" id="" placeholder="Nombre">
+                    <label for="exampleInputEmail1">Monto</label>
+                    <input type="text" name="amount" class="form-control" id="" placeholder="Nombre">
                     
                 </div>
                 </div>
@@ -89,7 +80,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
     <!-- /.content -->
   </div>
   <!-- footer -->
-  <?php include("./../../components/commons/footerComponent.php")?>
+  <?php include("./../../../components/commons/footerComponent.php")?>
 </body>
 
 <!-- jQuery -->
