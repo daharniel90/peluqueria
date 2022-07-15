@@ -18,6 +18,20 @@
 <?php include("./../../../components/commons/sideBarComponent.php")?>
 
 <?php include("./../../../components/commons/menuComponent.php")?>
+
+<?php
+ error_reporting(E_ALL);
+
+$connect=mysql_connect('localhost', 'root', '123456789');
+$db=mysql_select_db('peluqueria', $connect);
+
+
+if($db){
+
+$sql= "SELECT * FROM payment_methods";
+$query_payment_methods= mysql_query($sql);
+}
+?>
  
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
