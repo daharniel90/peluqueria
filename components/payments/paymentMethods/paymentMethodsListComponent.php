@@ -1,60 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
 
-    <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+<?php
 
-</head>
-<body>
-  <?php include("./../../../components/commons/menuComponent.php")?>
-  <?php include("./../../../components/commons/sideBarComponent.php")?>
+error_reporting(E_ALL);
 
+$servername = "localhost";
+$username = "root";
+$password = "1234567890";
+$dbname = "peluqueria";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+}else{
+
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $sql="DELETE FROM payment_methods WHERE id=$id";
+    $query_payment_methods_delete = mysqli_query($conn, $sql);
+  }
+
+  $sql= "SELECT * FROM payment_methods";
+  $query_payment_methods= mysqli_query($conn, $sql);
+}
+?>
+
+<?php include("./../../../components/commons/sideBarComponent.php")?>
+
+<?php include("./../../../components/commons/menuComponent.php")?>
 <div class="content-wrapper">
+
   <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de metodos de pago</h3>
+                  <h3 class="card-title">Listado de métodos de pago</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
-                    <thead>
                     <tr>
-                      <th>Rendering engine</th>
-                      <th>Browser</th>
-                      <th>Platform(s)</th>
-                      <th>Engine version</th>
-                      <th>CSS grade</th>
+                      <td>Método</td>
+                      <td>Fecha de creacion</td>
+                      <td>Editar</td>
+                      <td>Eliminar</td>
                     </tr>
-                    </thead>
-                    <tbody>
+                    <?php 
+                      while($method=mysqli_fetch_array($query_payment_methods)){
+                    ?>
                     <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 4.0
+                      <td><? echo $method["name"]?></td>
+                      <td><? echo $method["created_at"]?></td>
+                      <td>
+                        <i class="fas fa-edit"></i>
                       </td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                      <td>X</td>
+                      <td>
+                        <form id="delete" action="?" method="post">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<? echo $method['id']?>">
+                          <i onclick="delete_()" class="fas fa-trash"></i>
+                        </form>
+                      </td>
                     </tr>
-                    </tfoot>
+                    <?php } ?>
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -63,46 +74,16 @@
           </div>
         </div>
   </section>
+
 </div>
+<script>
+  function delete_(){
+    if(confirm("Estas seguro de eliminar este servicio ?")){
+      $("#delete").submit();
+    }  
+  }
+</script>
 <!-- Footer -->
 <?php include("./../../../components/commons/footerComponent.php")?>
 </body>
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables  & Plugins -->
-<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="../../plugins/jszip/jszip.min.js"></script>
-<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
-<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- Page specific script -->
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 </html>

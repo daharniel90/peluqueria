@@ -1,37 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
-
-     <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
-</head>
-<body>
 <?php include("./../../../components/commons/sideBarComponent.php")?>
 
 <?php include("./../../../components/commons/menuComponent.php")?>
 
 <?php
- error_reporting(E_ALL);
+error_reporting(E_ALL);
 
-$connect=mysql_connect('localhost', 'root', '123456789');
-$db=mysql_select_db('peluqueria', $connect);
+$servername = "localhost";
+$username = "root";
+$password = "1234567890";
+$dbname = "peluqueria";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
 
-if($db){
+ if(isset($_POST['submit'])){
+   $name=$_POST['name'];
+ 
+  if ($conn->connect_error) {
+    die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+  }else{  
+      $sql="INSERT INTO payment_methods (name) VALUES ('$name')";
+      $insert_services= mysqli_query($conn, $sql);
+        
+        if($insert_services){
+          ?>
+          <div class="alert alert-success" role="alert">
+          Método registrado con exito!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+          </div>
 
-$sql= "SELECT * FROM payment_methods";
-$query_payment_methods= mysql_query($sql);
-}
+          <?php
+        }else{
+          ?>
+          <div class="alert alert-dismissible alert-danger" role="alert">
+          Error al registrar el método.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+          </div>
+          <?php
+        }
+    }
+  }
 ?>
+
  
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -59,7 +70,7 @@ $query_payment_methods= mysql_query($sql);
               </div>
                 <!-- /.card-body -->
                 <div class="text-right">
-                  <button type="submit" class="btn btn-primary">Registrar</button>
+                <input type="submit" name="submit" class="btn btn-primary" value="Registrar">
                 </div>
               </form> 
                   </div>
