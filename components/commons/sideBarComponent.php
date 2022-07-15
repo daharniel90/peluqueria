@@ -107,10 +107,11 @@
                   <p>Lista de roles</p>
                 </a>
               </li>
+              
               <!--li class="nav-item">
                 <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar <small>+ Custom Area</small></p>
+                  <p>Fixed Sidebar <small>Empleados</small></p>
                 </a>
               </li-->
               <!--li class="nav-item">
@@ -137,6 +138,29 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
+                Empleados
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/peluqueria/components/employee/assistanceRegisterComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Registro de asistencia</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/peluqueria/components/employee/assistanceListComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de asistencia</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
                 Clientes
                 <i class="right fas fa-angle-left"></i>
               </p>
@@ -145,13 +169,13 @@
               <li class="nav-item">
                 <a href="/peluqueria/components/clients/clientRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registro</p>
+                  <p>Registro de clientes</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/clients/clientListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado</p>
+                  <p>Listado de clientes</p>
                 </a>
               </li>
               <!--li class="nav-item">
@@ -199,6 +223,18 @@
                 <a href="/peluqueria/components/categories/categoryListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado de categoria</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/peluqueria/components/services/quote/quoteRegisterComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Registrar cotizaciones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/peluqueria/components/services/quote/quoteListComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de cotizaciones</p>
                 </a>
               </li>
               <!--li class="nav-item">
