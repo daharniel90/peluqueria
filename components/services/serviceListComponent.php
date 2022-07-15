@@ -4,8 +4,8 @@
 error_reporting(E_ALL);
 
 $servername = "localhost";
-$username = "genesis";
-$password = "1234567890";
+$username = "root";
+$password = "genesisdsr2003";
 $dbname = "peluqueria";
 
 // Create connection
