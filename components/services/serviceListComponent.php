@@ -1,4 +1,5 @@
-
+<?php include("./../../components/commons/sideBarComponent.php")?>
+<?php include("./../../components/commons/menuComponent.php")?>
 <?php
 
 error_reporting(E_ALL);
@@ -26,9 +27,6 @@ if ($conn->connect_error) {
 }
 ?>
 
-<?php include("./../../components/commons/sideBarComponent.php")?>
-
-<?php include("./../../components/commons/menuComponent.php")?>
 <div class="content-wrapper">
 
   <section class="content">

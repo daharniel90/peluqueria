@@ -1,25 +1,31 @@
+<?php include("./../../../components/commons/sideBarComponent.php")?>
+<?php include("./../../../components/commons/menuComponent.php")?>
 <?php
  error_reporting(E_ALL);
 
-$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
-$db=mysql_select_db('peluqueria', $connect);
-
-if($db){
+ $servername = "localhost";
+ $username = "root";
+ $password = "genesisdsr2003";
+ $dbname = "peluqueria";
+ 
+ // Create connection
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ // Check connection
+ if ($conn->connect_error) {
+   die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+ }else{
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
     $sql="DELETE FROM quote WHERE id=$id";
-    $query_quote_delete= mysql_query($sql);
+    $query_quote_delete= mysqlii_query($conn, $sql);
   }
 
   $sql= "SELECT * FROM quote";
-  $query_quote= mysql_query($sql);
+  $query_quote= mysqli_query($conn, $sql);
 }
 ?>
 
-<?php include("./../../../components/commons/sideBarComponent.php")?>
-
-<?php include("./../../../components/commons/menuComponent.php")?>
 <div class="content-wrapper">
 
   <section class="content">
@@ -40,7 +46,7 @@ if($db){
                       <td>Eliminar</td>
                     </tr>
                     <?php 
-                      while($quote=mysql_fetch_array($query_quote)){
+                      while($quote=mysqli_fetch_array($query_quote)){
                     ?>
                     <tr>
                       <td><? echo $quote["amount"]?></td>

@@ -8,7 +8,7 @@
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../components/clients/clientRegisterComponent.php" class="h1">HairOneSalom</a>
+      <a href="../components/clients/clientRegisterComponent.php" class="h1">HairOneSalon</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Registrar nuevo cliente</p>

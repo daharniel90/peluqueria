@@ -1,15 +1,31 @@
+<?php include("./../../../components/commons/menuComponent.php")?>
+<?php include("./../../../components/commons/sideBarComponent.php")?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
 <?php
  error_reporting(E_ALL);
 
- $connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
- $db=mysql_select_db('peluqueria', $connect);
+$servername = "localhost";
+$username = "root";
+$password = "genesisdsr2003";
+$dbname = "peluqueria";
 
- if(isset($_POST['submit'])){
-   $amount=$_POST['amount'];
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+
  
-    if($db){  
+ 
+  if ($conn->connect_error) {
+    die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+  }else{ 
+
+      if(isset($_POST['submit'])){
+      $amount=$_POST['amount'];
+ 
+     
       $sql="INSERT INTO quote (amount) VALUES ('$amount')";
-      $insert_quote= mysql_query($sql);
+      $insert_quote= mysqli_query($conn, $sql);
         
         if($insert_quote){
           ?>
@@ -30,19 +46,6 @@
     }
   }
 ?>
-
-
-
-
-
-
-
-<?php include("./../../../components/commons/menuComponent.php")?>
-<?php include("./../../../components/commons/sideBarComponent.php")?>
-
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">

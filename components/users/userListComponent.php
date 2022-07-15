@@ -9,11 +9,11 @@ if($db){
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
     $sql="DELETE FROM users WHERE id=$id";
-    $query_users_delete= mysql_query($sql);
+    $query_users_delete= mysqli_query($conn, $sql);
   }
 
   $sql= "SELECT * FROM users";
-  $query_users= mysql_query($sql); 
+  $query_users= mysqli_query($conn, $sql); 
 
   /*if($query_users){
     alert("usuario eliminado");
@@ -50,7 +50,7 @@ if($db){
                       <td>Eliminar</td>
                     </tr>
                     <?php 
-                      while($users=mysql_fetch_array($query_users)){
+                      while($users=mysqli_fetch_array($query_users)){
                     ?>
                     <tr>
                       <td><? echo $users["name"]?></td>

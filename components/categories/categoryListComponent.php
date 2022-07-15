@@ -1,19 +1,26 @@
 <?php
  error_reporting(E_ALL);
 
-$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
-$db=mysql_select_db('peluqueria', $connect);
-
-if($db){
+ $servername = "localhost";
+ $username = "root";
+ $password = "genesisdsr2003";
+ $dbname = "peluqueria";
+ 
+ // Create connection
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ // Check connection
+ if ($conn->connect_error) {
+   die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+ }else{
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
     $sql="DELETE FROM categories WHERE id=$id";
-    $query_categories_delete= mysql_query($sql);
+    $query_categories_delete= mysqli_query($conn, $sql);
   }
 
   $sql= "SELECT * FROM categories";
-  $query_categories= mysql_query($sql);
+  $query_categories= mysqli_query($conn, $sql);
 }
 ?>
 
@@ -42,7 +49,7 @@ if($db){
                     </tr>
 
                     <?php 
-                      while($categories=mysql_fetch_array($query_categories)){
+                      while($categories=mysqli_fetch_array($query_categories)){
                     ?>
                     <tr>
                       <td><? echo $categories["name"]?></td>

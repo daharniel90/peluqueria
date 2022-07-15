@@ -1,15 +1,28 @@
+<?php include("./../../components/commons/sideBarComponent.php")?>
+<?php include("./../../components/commons/menuComponent.php")?>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
 <?php
  error_reporting(E_ALL);
- echo $_POST['name'];
- $connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
- $db=mysql_select_db('peluqueria', $connect);
 
-if(isset($_POST['submit'])){
-   $name=$_POST['name'];
- echo $name;
-  if($db){  
+ $servername = "localhost";
+ $username = "root";
+ $password = "genesisdsr2003";
+ $dbname = "peluqueria";
+ 
+ // Create connection
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ // Check connection
+
+if ($conn->connect_error) {
+  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+}else{
+
+  if(isset($_POST['submit'])){
+    $name=$_POST['name'];
+     
       $sql="INSERT INTO categories (name) VALUES ('$name')";
-      $insert_categories= mysql_query($sql);
+      $insert_categories= mysqli_query($conn, $sql);
       
       if($insert_categories){
         ?>
@@ -31,11 +44,6 @@ if(isset($_POST['submit'])){
 }
 ?>
 
-<?php include("./../../components/commons/sideBarComponent.php")?>
-
-<?php include("./../../components/commons/menuComponent.php")?>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -76,20 +84,3 @@ if(isset($_POST['submit'])){
   </div>
   <!-- Footer -->
 <?php include("./../../components/commons/footerComponent.php")?>
-</body>
-
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- jquery-validation -->
-<script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- Page specific script -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>1
-</html>

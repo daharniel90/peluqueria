@@ -1,50 +1,62 @@
-<?php
- error_reporting(E_ALL);
-
-$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
-$db=mysql_select_db('peluqueria', $connect);
-
-
-if(isset($_POST['submit'])){
-   $name=$_POST['name'];
-   $lastname=$_POST['lastname'];
-   $dni=$_POST['dni'];
-   $phone=$_POST['phone'];
-   $address=$_POST['address'];
-   $email=$_POST['email'];
-   $username=$_POST['username'];
-   $password=$_POST['password'];
- 
-    if($db){  
-        $sql="INSERT INTO users (name, lastname, dni, phone, address, email, username, password) VALUES ('$name', '$lastname', '$dni', '$phone', '$address', '$email', '$username', '$password')";
-        $insert_users= mysql_query($sql);
-        
-        if($insert_users){
-          ?>
-          <div class="alert alert-success" role="alert">
-          Usuario registrado con exito!
-          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
-          
-          </div>
-          <?php
-        }else{
-          ?>
-          <div class="alert alert-dismissible alert-danger" role="alert">
-          Error al registrar el usuario.
-          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
-          </div>
-          <?php
-        }
-    }
-}
-?>
-
 <?php include("./../../components/commons/menuComponent.php")?>
 <!-- Main Sidebar Container -->
 <?php include("./../../components/commons/sideBarComponent.php")?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<?php
+ error_reporting(E_ALL);
+
+ $servername = "localhost";
+ $username = "root";
+ $password = "genesisdsr2003";
+ $dbname = "peluqueria";
  
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+ // Create connection
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ // Check connection
+
+ if ($conn->connect_error) {
+  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+}else{
+  
+      $sql= "SELECT * FROM roles";
+      $query_roles= mysqli_query($conn, $sql);
+
+      if(isset($_POST['submit'])){
+        $name=$_POST['name'];
+        $lastname=$_POST['lastname'];
+        $dni=$_POST['dni'];
+        $phone=$_POST['phone'];
+        $address=$_POST['address'];
+        $email=$_POST['email'];
+        $username=$_POST['username'];
+        $password=$_POST['password'];
+      
+            
+      $sql="INSERT INTO users (name, lastname, dni, phone, address, email, username, password) VALUES ('$name', '$lastname', '$dni', '$phone', '$address', '$email', '$username', '$password')";
+      $insert_users= mysqli_query($conn, $sql);
+              
+              if($insert_users){
+                ?>
+                <div class="alert alert-success" role="alert">
+                Usuario registrado con exito!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+                
+                </div>
+                <?php
+              }else{
+                ?>
+                <div class="alert alert-dismissible alert-danger" role="alert">
+                Error al registrar el usuario.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+                </div>
+                <?php
+              }
+          
+      }
+    }
+?>
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -86,6 +98,16 @@ if(isset($_POST['submit'])){
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nombre de usuario</label>
                     <input type="text" name="username" class="form-control" id="" placeholder="Nombre de usuario">  
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" class="form-label">Rol:</label>
+                        <select class="form-select" aria-label=".form-select-sm example" name="rol">
+                            <option value="">-</option>
+                          <?php while($rol=mysqli_fetch_array($query_roles)){?>
+                            
+                            <option value="<? echo $rol["id"]?>"><? echo $rol["name"]?></option>
+                          <?php } ?>
+                        </select>  
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Contraseña</label>
