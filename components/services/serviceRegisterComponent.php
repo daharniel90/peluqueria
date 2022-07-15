@@ -11,13 +11,20 @@ $dbname = "peluqueria";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 
- if(isset($_POST['submit'])){
-   $name=$_POST['name'];
+ 
  
   if ($conn->connect_error) {
     die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-  }else{  
-      $sql="INSERT INTO services (name) VALUES ('$name')";
+  }else{ 
+
+      $sql= "SELECT * FROM categories";
+      $query_categories= mysqli_query($conn, $sql); 
+
+      if(isset($_POST['submit'])){
+        $name=$_POST['name'];
+        $category=$_POST['category'];
+
+      $sql="INSERT INTO services (name, id_category) VALUES ('$name', '$category')";
       $insert_services= mysqli_query($conn, $sql);
         
         if($insert_services){
@@ -36,8 +43,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
           </div>
           <?php
         }
+     }
     }
-  }
 ?>
 
 
@@ -68,11 +75,13 @@ $conn = new mysqli($servername, $username, $password, $dbname);
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputPassword1" class="form-label">categoria:</label>
-                    <select class="form-select" aria-label=".form-select-sm example" name="nacionalidad">
+                    <select class="form-select" aria-label=".form-select-sm example" name="category">
                         <option value="">-</option>
-                        <option value=""></option>
-                        <option value=""></option>
-                    </select> 
+                      <?php while($category=mysqli_fetch_array($query_categories)){?>
+                        
+                        <option value="<? echo $category["id"]?>"><? echo $category["name"]?></option>
+                      <?php } ?>
+                    </select>  
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nombre</label>
