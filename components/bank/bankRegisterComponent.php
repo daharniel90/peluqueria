@@ -1,5 +1,5 @@
-<?php include("./../../../components/commons/sideBarComponent.php")?>
-<?php include("./../../../components/commons/menuComponent.php")?>
+<?php include("./../../components/commons/sideBarComponent.php")?>
+<?php include("./../../components/commons/menuComponent.php")?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 <?php
@@ -21,13 +21,13 @@ if ($conn->connect_error) {
   if(isset($_POST['submit'])){
     $name=$_POST['name'];
      
-      $sql="INSERT INTO payment_methods (name) VALUES ('$name')";
-      $insert_payment_methods= mysqli_query($conn, $sql);
+      $sql="INSERT INTO banks (name) VALUES ('$name')";
+      $insert_bank= mysqli_query($conn, $sql);
       
-      if($insert_payment_methods){
+      if($insert_bank){
         ?>
         <div class="alert alert-success" role="alert">
-        Metodo de pago registrado con exito!
+        Banco registrado con exito!
         <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
         
         </div>
@@ -35,38 +35,38 @@ if ($conn->connect_error) {
       }else{
         ?>
         <div class="alert alert-dismissible alert-danger" role="alert">
-        Error al registrar el metodo de pago.
+        Error al registrar el banco.
         <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
         </div>
         <?php
       }
   }
 
-        //Show a payment method for edit
+        //Show a bank for edit
         if(isset($_POST['edit'])){
           $id=$_POST['id'];
 
 
-          $sql= "SELECT * FROM payment_methods WHERE id=$id";
-          $query_payment_method = mysqli_query($conn, $sql); 
-          $payment_method = mysqli_fetch_array($query_payment_method);
+          $sql= "SELECT * FROM banks WHERE id=$id";
+          $query_bank = mysqli_query($conn, $sql); 
+          $bank = mysqli_fetch_array($query_bank);
 
         }
 
 
 
-        //Update a new payment method
+        //Update a new bank
         if(isset($_POST['update'])){
-          $idPayment=$_POST['idPayment'];
+          $idbank=$_POST['idBank'];
           $name=$_POST['name'];
 
-          $sql="UPDATE payment_methods SET name = '$name' WHERE id = $idPayment ";
-          $update_payment_methods= mysqli_query($conn, $sql);
+          $sql="UPDATE banks SET name = '$name' WHERE id = $idBank ";
+          $update_bank= mysqli_query($conn, $sql);
             
-            if($update_payment_methods){
+            if($update_bank){
               ?>
               <div class="alert alert-success" role="alert">
-              Metodo de pago modificado con exito!
+              Categoria modificada con exito!
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
 
@@ -74,15 +74,15 @@ if ($conn->connect_error) {
             }else{
               ?>
               <div class="alert alert-dismissible alert-danger" role="alert">
-              Error al tratar de modificar el metodo de pago.
+              Error al tratar de modificar la categoria.
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
               <?php
             }
 
-            $sql= "SELECT * FROM payment_methods WHERE id=$idPayment";
-            $query_payment_method = mysqli_query($conn, $sql); 
-            $payment_method = mysqli_fetch_array($query_payment_method);
+            $sql= "SELECT * FROM banks WHERE id=$idBank";
+            $query_bank = mysqli_query($conn, $sql); 
+            $bank = mysqli_fetch_array($query_bank);
         }
 
 
@@ -98,7 +98,7 @@ if ($conn->connect_error) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro de metodos de pago</h1>
+            <h1>Registro de categoria</h1>
           </div>
         </div>
       </div>
@@ -111,16 +111,16 @@ if ($conn->connect_error) {
                  
           
                     <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" name="name"  class="form-control" id="" placeholder="Nombre" value="<?php if(isset($payment_method))echo $payment_method['name'] ?>">
+                    <input type="text" name="name"  class="form-control" id="" placeholder="Nombre" value="<?php if(isset($bank))echo $bank['name'] ?>">
                   
                   </div>
                 </div>
                 <!-- /.card-body -->
-                <?php if(isset($payment_method)){ ?>
-                  <input type="hidden" name="idPayment" value=<?php echo $payment_method['id']?>>
+                <?php if(isset($bank)){ ?>
+                  <input type="hidden" name="idBank" value=<?php echo $bank['id']?>>
                 <?php }?>
                 <div class="card-footer">
-                  <input type="submit" class="btn btn-primary" name=<?php if(isset($payment_method)){echo "update"; }else { echo "submit";}?> value=<?php if(isset($payment_method)){echo "Guardar"; }else { echo "Registrar";}?>>
+                  <input type="submit" class="btn btn-primary" name=<?php if(isset($bank)){echo "update"; }else { echo "submit";}?> value=<?php if(isset($bank)){echo "Guardar"; }else { echo "Registrar";}?>>
                 </div>
               </form>
             </div>
@@ -135,4 +135,4 @@ if ($conn->connect_error) {
     <!-- /.content -->
   </div>
   <!-- Footer -->
-<?php include("./../../../components/commons/footerComponent.php")?>
+<?php include("./../../components/commons/footerComponent.php")?>

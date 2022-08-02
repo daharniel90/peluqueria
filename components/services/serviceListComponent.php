@@ -22,7 +22,9 @@ if ($conn->connect_error) {
     $query_services_delete = mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT * FROM services";
+  $sql= "SELECT S.*, C.name category FROM services S
+  JOIN categories C ON S.id_category = C.id
+  ";
   $query_services= mysqli_query($conn, $sql);
 }
 ?>
@@ -42,24 +44,27 @@ if ($conn->connect_error) {
                   <table id="example2" class="table table-bordered table-hover">
                     <tr>
                       <td>Nombre</td>
+                      <td>Categoria</td>
                       <td>Fecha de creacion</td>
-                      <td>Editar</td>
-                      <td>Eliminar</td>
+                      <td>Acciones</td>
                     </tr>
                     <?php 
                       while($services=mysqli_fetch_array($query_services)){
                     ?>
                     <tr>
                       <td><? echo $services["name"]?></td>
+                      <td><?php echo $services["category"]?></td>
                       <td><? echo $services["date"]?></td>
                       <td>
-                        <i class="fas fa-edit"></i>
-                      </td>
-                      <td>
-                        <form id="delete" action="?" method="post">
+                        <form id="edit<?echo $services["id"]?>" action="serviceRegisterComponent.php" method="post">
+                          <input type="hidden" name="edit" value="edit">
+                          <input type="hidden" name="id" value="<? echo $services["id"]?>">
+                          <i onclick="edit_(<?echo $services['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                        </form>
+                        <form id="delete<?echo $services["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
                           <input type="hidden" name="id" value="<? echo $services["id"]?>">
-                          <i onclick="delete_()" class="fas fa-trash"></i>
+                          <i onclick="delete_(<?echo $services['id']?>, '<? echo $services['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
@@ -75,9 +80,13 @@ if ($conn->connect_error) {
 
 </div>
 <script>
-  function delete_(){
-    if(confirm("Estas seguro de eliminar este servicio ?")){
-      $("#delete").submit();
+  function edit_(id){
+    $("#edit"+id).submit(); 
+  }
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar el servicio "+name+"?")){
+      $("#delete"+id).submit();
     }  
   }
 </script>

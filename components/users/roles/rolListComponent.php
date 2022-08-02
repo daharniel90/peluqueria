@@ -42,8 +42,7 @@ if ($conn->connect_error) {
                     <tr>
                       <td>Nombre</td>
                       <td>Funciones</td>
-                      <td>Editar</td>
-                      <td>Eliminar</td>
+                      <td>Acciones</td>
                     </tr>
                     <?php 
                       while($roles=mysqli_fetch_array($query_roles)){
@@ -52,13 +51,16 @@ if ($conn->connect_error) {
                       <td><? echo $roles["name"]?></td>
                       <td><? echo $roles["functions"]?></td>
                       <td>
-                        <i class="fas fa-edit"></i>
-                      </td>
-                      <td>
-                        <form id="delete" action="?" method="post">
+                      <form id="edit<?echo $roles["id"]?>" action="rolRegisterComponent.php" method="post">
+                          <input type="hidden" name="edit" value="edit">
+                          <input type="hidden" name="id" value="<? echo $roles["id"]?>">
+                          <i onclick="edit_(<?echo $roles['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                        </form>
+                      
+                        <form id="delete<?echo $roles["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
                           <input type="hidden" name="id" value="<? echo $roles["id"]?>">
-                          <i onclick="delete_()" class="fas fa-trash"></i>
+                          <i onclick="delete_(<?echo $roles['id']?>, '<? echo $roles['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
@@ -74,9 +76,14 @@ if ($conn->connect_error) {
 
 </div>
 <script>
-  function delete_(){
-    if(confirm("Estas seguro de eliminar este rol?")){
-      $("#delete").submit();
+  function edit_(id){
+    $("#edit"+id).submit(); 
+  }
+
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar este rol "+name+"?")){
+      $("#delete"+id).submit();
     }  
   }
 </script>

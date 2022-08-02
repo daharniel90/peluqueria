@@ -19,7 +19,7 @@
 
 </head>
 
-<body onLoad="closeNavBar()">
+<body onLoad="<?php echo strpos($_SERVER['REQUEST_URI'], 'loginComponent') ? 'closeNavBar()' : ''?>">
   <script>
     function closeNavBar(){
       let button= document.getElementById("pushmenu");
@@ -31,14 +31,11 @@
 <nav class="main-header navbar navbar-expand navbar-dark">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
+      <li class="nav-item  <?php echo strpos($_SERVER['REQUEST_URI'], 'loginComponent') ? 'itemHidden' : ''?>">
         <a class="nav-link" data-widget="pushmenu" href="#" id="pushmenu" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Inicio</a>
+        <a href="/peluqueria/index.php" class="nav-link">Inicio</a>
       </li>
     </ul>
 
@@ -163,3 +160,8 @@
       </li>
     </ul>
   </nav>
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="/peluqueria/logo-peluqueria.png" alt="AdminLTELogo" width="200">
+  </div>

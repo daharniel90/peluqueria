@@ -19,15 +19,15 @@ if ($conn->connect_error) {
 }else{
 
   if(isset($_POST['submit'])){
-    $name=$_POST['name'];
+    $amount=$_POST['amount'];
      
-      $sql="INSERT INTO payment_methods (name) VALUES ('$name')";
-      $insert_payment_methods= mysqli_query($conn, $sql);
+      $sql="INSERT INTO quote (amount) VALUES ('$amount')";
+      $insert_quote= mysqli_query($conn, $sql);
       
-      if($insert_payment_methods){
+      if($insert_quote){
         ?>
         <div class="alert alert-success" role="alert">
-        Metodo de pago registrado con exito!
+        Cotizacion registrada con exito!
         <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
         
         </div>
@@ -35,38 +35,38 @@ if ($conn->connect_error) {
       }else{
         ?>
         <div class="alert alert-dismissible alert-danger" role="alert">
-        Error al registrar el metodo de pago.
+        Error al registrar la cotizacion.
         <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
         </div>
         <?php
       }
   }
 
-        //Show a payment method for edit
+        //Show a quote for edit
         if(isset($_POST['edit'])){
           $id=$_POST['id'];
 
 
-          $sql= "SELECT * FROM payment_methods WHERE id=$id";
-          $query_payment_method = mysqli_query($conn, $sql); 
-          $payment_method = mysqli_fetch_array($query_payment_method);
+          $sql= "SELECT * FROM quote WHERE id=$id";
+          $query_quote = mysqli_query($conn, $sql); 
+          $quote = mysqli_fetch_array($query_quote);
 
         }
 
 
 
-        //Update a new payment method
+        //Update a new quote
         if(isset($_POST['update'])){
-          $idPayment=$_POST['idPayment'];
-          $name=$_POST['name'];
+          $idQuote=$_POST['idQuote'];
+          $amount=$_POST['amount'];
 
-          $sql="UPDATE payment_methods SET name = '$name' WHERE id = $idPayment ";
-          $update_payment_methods= mysqli_query($conn, $sql);
+          $sql="UPDATE quote SET amount = '$amount' WHERE id = $idQuote ";
+          $update_quote= mysqli_query($conn, $sql);
             
-            if($update_payment_methods){
+            if($update_quote){
               ?>
               <div class="alert alert-success" role="alert">
-              Metodo de pago modificado con exito!
+              Cotizacion modificada con exito!
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
 
@@ -74,15 +74,15 @@ if ($conn->connect_error) {
             }else{
               ?>
               <div class="alert alert-dismissible alert-danger" role="alert">
-              Error al tratar de modificar el metodo de pago.
+              Error al tratar de modificar la cotizacion.
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
               <?php
             }
 
-            $sql= "SELECT * FROM payment_methods WHERE id=$idPayment";
-            $query_payment_method = mysqli_query($conn, $sql); 
-            $payment_method = mysqli_fetch_array($query_payment_method);
+            $sql= "SELECT * FROM quotes WHERE id=$idQuote";
+            $query_quote = mysqli_query($conn, $sql); 
+            $quote = mysqli_fetch_array($query_quote);
         }
 
 
@@ -98,7 +98,7 @@ if ($conn->connect_error) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro de metodos de pago</h1>
+            <h1>Registro de cotizaciones</h1>
           </div>
         </div>
       </div>
@@ -110,17 +110,17 @@ if ($conn->connect_error) {
                 <div class="form-group">
                  
           
-                    <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" name="name"  class="form-control" id="" placeholder="Nombre" value="<?php if(isset($payment_method))echo $payment_method['name'] ?>">
+                    <label for="exampleInputEmail1">Monto</label>
+                    <input type="text" name="amount"  class="form-control" id=""  value="<?php if(isset($quote))echo $quote['amount'] ?>">
                   
                   </div>
                 </div>
                 <!-- /.card-body -->
-                <?php if(isset($payment_method)){ ?>
-                  <input type="hidden" name="idPayment" value=<?php echo $payment_method['id']?>>
+                <?php if(isset($quote)){ ?>
+                  <input type="hidden" name="idQuote" value=<?php echo $quote['id']?>>
                 <?php }?>
                 <div class="card-footer">
-                  <input type="submit" class="btn btn-primary" name=<?php if(isset($payment_method)){echo "update"; }else { echo "submit";}?> value=<?php if(isset($payment_method)){echo "Guardar"; }else { echo "Registrar";}?>>
+                  <input type="submit" class="btn btn-primary" name=<?php if(isset($quote)){echo "update"; }else { echo "submit";}?> value=<?php if(isset($quote)){echo "Guardar"; }else { echo "Registrar";}?>>
                 </div>
               </form>
             </div>

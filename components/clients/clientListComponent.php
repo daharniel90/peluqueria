@@ -1,6 +1,34 @@
+<?php
+ error_reporting(E_ALL);
 
-  <?php include("./../../components/commons/menuComponent.php")?>
-  <?php include("./../../components/commons/sideBarComponent.php")?>
+ $servername = "localhost";
+ $username = "root";
+ $password = "genesisdsr2003";
+ $dbname = "peluqueria";
+ 
+ // Create connection
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ // Check connection
+ if ($conn->connect_error) {
+   die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+ }else{
+
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+
+    $sql="DELETE FROM clients WHERE id=$id";
+    $query_clients_delete= mysqli_query($conn, $sql);
+  }
+
+  $sql= "SELECT * FROM clients";
+  $query_clients= mysqli_query($conn, $sql);
+
+}
+?>
+
+<?php include("./../../components/commons/sideBarComponent.php")?>
+
+<?php include("./../../components/commons/menuComponent.php")?>
 
 <div class="content-wrapper">
   <section class="content">
@@ -14,26 +42,43 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
-                    <thead>
+                    
                     <tr>
-                      <th>Rendering engine</th>
-                      <th>Browser</th>
-                      <th>Platform(s)</th>
-                      <th>Engine version</th>
-                      <th>CSS grade</th>
+                      <td>Nombre</td>
+                      <td>Apellido</td>
+                      <td>Cedula</td>
+                      <td>Telefono</td>
+                      <td>Direccion</td>
+                      <td>Acciones</td>
                     </tr>
-                    </thead>
-                    <tbody>
+
+                    <?php 
+                      while($clients=mysqli_fetch_array($query_clients)){
+                    ?>
                     <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 4.0
+                      <td><? echo $clients["name"]?></td>
+                      <td><? echo $clients["last_name"]?></td>
+                      <td><? echo $clients["dni"]?></td>
+                      <td><? echo $clients["phone"]?></td>
+                      <td><? echo $clients["address"]?></td>
+                      <td>
+                        <form id="edit<?echo $clients["id"]?>" action="clientRegisterComponent.php" method="post">
+                          <input type="hidden" name="edit" value="edit">
+                          <input type="hidden" name="id" value="<? echo $clients["id"]?>">
+                          <i onclick="edit_(<?echo $clients['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                        </form>
+                      
+                        <form id="delete<?echo $clients["id"]?>" action="?" method="post">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<? echo $clients["id"]?>">
+                          <i onclick="delete_(<?echo $clients['id']?>, '<? echo $clients['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                        </form>
                       </td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                      <td>X</td>
                     </tr>
-                    </tfoot>
+                    <?php } ?>
+                   
+                   
+                    
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -43,6 +88,20 @@
         </div>
   </section>
 </div>
+<script>
+  function edit_(id){
+    $("#edit"+id).submit(); 
+  }
+
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar este cliente "+name+"?")){
+      $("#delete"+id).submit();
+    }  
+  }
+</script>
+<!-- Footer -->
+<?php include("./../../components/commons/footerComponent.php")?>
 </body>
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

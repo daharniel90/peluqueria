@@ -15,12 +15,14 @@
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
-    $sql="DELETE FROM categories WHERE id=$id";
-    $query_categories_delete= mysqli_query($conn, $sql);
+    $sql="DELETE FROM invoices WHERE id=$id";
+    $query_invoice= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT * FROM categories";
-  $query_categories= mysqli_query($conn, $sql);
+  $sql= "SELECT invoices.*, clients.name,last_name,dni, quote.amount FROM invoices
+  JOIN clients ON invoices.id_client = clients.id
+  JOIN quote ON invoices.id_quote = quote.id ";
+  $query_invoice= mysqli_query($conn, $sql);
 
 }
 ?>
@@ -36,35 +38,43 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de categorias</h3>
+                  <h3 class="card-title">Listado de facturas de clientes</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                     
                     <tr>
+                      <td>Cedula</td>
                       <td>Nombre</td>
-                      <td>Fecha de creacion</td>
+                      <td>Apellido</td>
+                      <td>Cotizacion</td>
+                      <td>Total</td>
+                      <td>Factura pagada</td>
                       <td>Acciones</td>
                     </tr>
 
                     <?php 
-                      while($categories=mysqli_fetch_array($query_categories)){
+                      while($invoice=mysqli_fetch_array($query_invoice)){
                     ?>
                     <tr>
-                      <td><? echo $categories["name"]?></td>
-                      <td><? echo $categories["date"]?></td>
+                      <td><? echo $invoice["dni"]?></td>
+                      <td><? echo $invoice["name"]?></td>
+                      <td><? echo $invoice["last_name"]?></td>
+                      <td><? echo $invoice["amount"]?> Bs.</td>
+                      <td><? echo $invoice["total"]?> $.</td>
+                      <td><? echo $invoice["paid_bill"]?></td>
                       <td>
-                        <form id="edit<?echo $categories["id"]?>" action="categoryRegisterComponent.php" method="post">
+                        <form id="edit<?echo $invoice["id"]?>" action="invoiceComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
-                          <i onclick="edit_(<?echo $categories['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                          <input type="hidden" name="id" value="<? echo $invoice["id"]?>">
+                          <i onclick="edit_(<?echo $invoice['id']?>)" class="fas fa-search cursor-over" title="Ver factura"></i>
                         </form>
                       
-                        <form id="delete<?echo $categories["id"]?>" action="?" method="post">
+                        <form id="delete<?echo $invoice["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
-                          <i onclick="delete_(<?echo $categories['id']?>, '<? echo $categories['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<? echo $invoice["id"]?>">
+                          <i onclick="delete_(<?echo $invoice['id']?>, '<? echo $invoice['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
@@ -88,7 +98,7 @@
 
 
   function delete_(id, name){
-    if(confirm("Estas seguro de eliminar esta categoria "+name+"?")){
+    if(confirm("Estas seguro de eliminar esta factura "+name+"?")){
       $("#delete"+id).submit();
     }  
   }
