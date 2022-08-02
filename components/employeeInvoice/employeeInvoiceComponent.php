@@ -19,10 +19,25 @@
     $query_employee_invoice= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT employee_invoices.*, users.name,lastname,dni, quote.amount FROM employee_invoices
-  JOIN users ON employee_invoices.id_user = users.id
-  JOIN quote ON employee_invoices.id_quote = quote.id ";
+  $sql= "SELECT EI.*, U.name,lastname,dni,phone,address, Q.amount FROM employee_invoices EI
+  JOIN users U ON EI.id_user = U.id
+  JOIN quote Q ON EI.id_quote = Q.id 
+  WHERE EI.id = $id
+  ";
   $query_employee_invoice= mysqli_query($conn, $sql);
+  
+  /*if(mysqli_num_rows($query_employee_invoice) > 0){
+    $sql= "SELECT S.id, S.name, SD.price, COUNT( S.id ) AS quantity, (COUNT( S.id )* price) AS total
+    FROM service_contract SC
+    LEFT JOIN users U ON SC.id_user = U.id
+    LEFT JOIN services S ON SC.id_service = S.id
+    LEFT JOIN service_detail SD ON SC.id_service_detail = SD.id
+    LEFT JOIN invoices I ON SC.id_invoice = I.id
+    WHERE I.id =$id
+    GROUP BY S.id
+    "; echo $sql;
+    $query_service_contract= mysqli_query($conn, $sql);
+  }*/
 
 }
 ?>
@@ -38,51 +53,60 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de facturas de empleados</h3>
+                <img src="/peluqueria/logo-peluqueria.png" alt="AdminLTE Logo">
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
-                    
-                    <tr>
-                      <td>Cedula</td>
-                      <td>Nombre</td>
-                      <td>Apellido</td>
-                      <td>Cotizacion</td>
-                      <td>Total</td>
-                      <td>Factura pagada</td>
-                      <td>Acciones</td>
-                    </tr>
-
-                    <?php 
+                  <table id="example2" class="table table-borderless">
+                  <?php 
                       while($employee_invoice=mysqli_fetch_array($query_employee_invoice)){
                     ?>
                     <tr>
-                      <td><? echo $employee_invoice["dni"]?></td>
-                      <td><? echo $employee_invoice["name"]?></td>
-                      <td><? echo $employee_invoice["lastname"]?></td>
-                      <td><? echo $employee_invoice["amount"]?> Bs.</td>
-                      <td><? echo $employee_invoice["total"]?> $.</td>
-                      <td><? echo $employee_invoice["paid_bill"]?></td>
-                      <td>
-                        <form id="edit<?echo $employee_invoice["id"]?>" action="employeeInvoiceComponent.php" method="post">
-                          <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $employee_invoice["id"]?>">
-                          <i onclick="edit_(<?echo $employee_invoice['id']?>)" class="fas fa-search cursor-over" title="Ver factura"></i>
-                        </form>
-                      
-                        <form id="delete<?echo $employee_invoice["id"]?>" action="?" method="post">
-                          <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $employee_invoice["id"]?>">
-                          <i onclick="delete_(<?echo $employee_invoice['id']?>, '<? echo $employee_invoice['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
-                        </form>
-                      </td>
+                      <td>N# de factura: <? echo $employee_invoice["id"]?></td>
+                      <td>fecha: <? echo $employee_invoice["created_at"]?></td>
+                    </tr>
+                    <tr>
+                      <td>Facturar a: <? echo $employee_invoice["name"]?> <? echo $employee_invoice["lastname"]?></td>
+                    </tr>
+                    <tr>
+                      <td>C.I.: <? echo $employee_invoice["dni"]?></td>
+                    </tr>
+                    <tr>
+                      <td>Direccion: <? echo $employee_invoice["address"]?></td>
+                    </tr>
+                    <tr>
+                      <td>Telefono: <? echo $employee_invoice["phone"]?></td>
                     </tr>
                     <?php } ?>
+                    <tr>
+                      <table class="table table-bordered">
+                        <tr>
+                          <td>Descripcion</td>
+                          <td>Cantidad</td>
+                          <td>Precio</td>
+                          <td>Total</td>
+                        </tr>
+                        <!--?php 
+                        $total = 0;
+                        while($service_contract=mysqli_fetch_array($query_service_contract)){
+                          $total = $total + $service_contract['total'];
+                        ?>
+                        <tr>
+                          <td><!?php echo $service_contract['name']?></td>
+                          <td><!?php echo $service_contract['quantity']?></td>
+                          <td><!?php echo $service_contract['price']?> $</td>
+                          <td><!?php echo $service_contract['total']?> $</td>
+                        </tr>
+                        <!?php 
+                          }
+                        ?>
+                      </table>
+                    </tr>
                    
                    
                     
                   </table>
+                  <!?php echo $total?> $
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -91,18 +115,7 @@
         </div>
   </section>
 </div>
-<script>
 
-function edit_(id){
-    $("#edit"+id).submit(); 
-  }
-
-  function delete_(id, name){
-    if(confirm("Estas seguro de eliminar esta factura "+name+lastname+"?")){
-      $("#delete"+id).submit();
-    }  
-  }
-</script>
 <!-- Footer -->
 <?php include("./../../components/commons/footerComponent.php")?>
 </body>

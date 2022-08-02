@@ -79,32 +79,31 @@
               <p>
                 Usuarios
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/peluqueria/components/users/userRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registrar Usuario</p>
+                  <p>Nuevo usuario</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/users/userListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de usuarios</p>
+                  <p>Usuarios</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/users/roles/rolRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registrar rol</p>
+                  <p>Nuevo rol</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/users/roles/rolListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Lista de roles</p>
+                  <p>Roles</p>
                 </a>
               </li>
               
@@ -146,13 +145,13 @@
               <li class="nav-item">
                 <a href="/peluqueria/components/employee/assistanceRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registro de asistencia</p>
+                  <p>Nueva asistencia</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/employee/assistanceListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de asistencia</p>
+                  <p>Asistencias</p>
                 </a>
               </li>
             </ul>
@@ -169,13 +168,13 @@
               <li class="nav-item">
                 <a href="/peluqueria/components/clients/clientRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registro de clientes</p>
+                  <p>Nuevo cliente</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/clients/clientListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de clientes</p>
+                  <p>Clientes</p>
                 </a>
               </li>
               <!--li class="nav-item">
@@ -204,25 +203,25 @@
               <li class="nav-item">
                 <a href="/peluqueria/components/services/serviceRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registrar servicio</p>
+                  <p>Nuevo servicio</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/services/serviceListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de servicio</p>
+                  <p>Servicios</p>
                 </a>
               </li>
             <li class="nav-item">
                 <a href="/peluqueria/components/categories/categoryRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registrar categoria</p>
+                  <p>Nueva categoria</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/categories/categoryListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de categoria</p>
+                  <p>Categorias</p>
                 </a>
               </li>
             </ul>
@@ -239,43 +238,61 @@
               <li class="nav-item">
                 <a href="/peluqueria/components/payments/paymentMethods/paymentMethodsRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registrar metodos de pago</p>
+                  <p>Nuevo metodo de pago</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/payments/paymentMethods/paymentMethodsListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de metodos de pago</p>
+                  <p>Metodos de pago</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/peluqueria/components/bank/bankRegisterComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Nuevo banco</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/peluqueria/components/bank/bankListComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Bancos</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/payments/paymentQuote/quoteRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Registar cotizacion</p>
+                  <p>Nueva cotizacion</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/payments/paymentQuote/quoteListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado cotizaciones</p>
+                  <p>Cotizaciones</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/payments/paymentsClientListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado pago clientes</p>
+                  <p>Pago clientes</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/payments/paymentsEmployeeListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado pago empleados</p>
+                  <p>Pago empleados</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/peluqueria/components/invoices/invoiceListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de facturas de clientes</p>
+                  <p>Facturas de clientes</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/peluqueria/components/employeeInvoice/employeeInvoiceListComponent.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Facturas de empleados</p>
                 </a>
               </li>
             </ul>
@@ -284,34 +301,28 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
-                Contratos
+              Contratos
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/peluqueria/components/contracts/contractsListComponent.php" class="nav-link">
+              <a href="/peluqueria/components/contracts/contractsRegisterComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de contratos</p>
+                  <p>Nuevo contrato</p>
                 </a>
-              <ul class="nav nav-treeview">
+              </li>
               <li class="nav-item">
-                <a href="/peluqueria/components/contracts/contractsRegisterComponent.php" class="nav-link">
+              <a href="/peluqueria/components/contracts/contractsListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p></p>
+                  <p>Contratos</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-                <a href="/peluqueria/components/contracts/contractsRegisterComponent.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Registro de contrato</p>
-                </a>
-              </li>
 
-            </ul>
-          </li>
+          
+         
          
         </ul>
         <!-- /.sidebar-menu -->

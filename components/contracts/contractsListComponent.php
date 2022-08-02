@@ -1,6 +1,35 @@
->
 <?php include("./../../components/commons/menuComponent.php")?>  
 <?php include("./../../components/commons/sideBarComponent.php")?>
+<?php
+
+error_reporting(E_ALL);
+
+$servername = "localhost";
+$username = "root";
+$password = "genesisdsr2003";
+$dbname = "peluqueria";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+}else{
+
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $sql="DELETE FROM service_contract WHERE id=$id";
+    $query_service_contract_delete = mysqli_query($conn, $sql);
+  }
+
+  $sql= "SELECT SC.*, U.name uname,lastname,dni, S.name, SD.price, I.id FROM service_contract SC
+  JOIN users U ON SC.id_user = U.id
+  JOIN services S ON SC.id_service = S.id
+  JOIN service_detail SD ON SC.id_service_detail = SD.id
+  JOIN invoices I ON SC.id_invoice = I.id";
+  $query_service_contract= mysqli_query($conn, $sql);
+}
+?>
 
 
 <div class="content-wrapper">
@@ -15,26 +44,39 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
-                    <thead>
                     <tr>
-                      <th>Rendering engine</th>
-                      <th>Browser</th>
-                      <th>Platform(s)</th>
-                      <th>Engine version</th>
-                      <th>CSS grade</th>
+                      <td>Nombre</td>
+                      <td>Apellido</td>
+                      <td>Cedula</td>
+                      <td>Servicio</td>
+                      <td>Precio</td>
+                      <td>N# de factura</td>
+                      <td>Acciones</td>
                     </tr>
-                    </thead>
-                    <tbody>
+                    <?php 
+                      while($service_contract=mysqli_fetch_array($query_service_contract)){
+                    ?>
                     <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 4.0
+                      <td><?php echo $service_contract["uname"]?></td>
+                      <td><?php echo $service_contract["lastname"]?></td>
+                      <td><?php echo $service_contract["dni"]?></td>
+                      <td><?php echo $service_contract["name"]?></td>
+                      <td><?php echo $service_contract["price"]?></td>
+                      <td><?php echo $service_contract["id"]?></td>
+                      <td>
+                        <form id="edit<?echo $service_contract["id"]?>" action="contractsRegisterComponent.php" method="post">
+                          <input type="hidden" name="edit" value="edit">
+                          <input type="hidden" name="id" value="<? echo $service_contract["id"]?>">
+                          <i onclick="edit_(<?echo $service_contract['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                        </form>
+                        <form id="delete<?echo $service_contract["id"]?>" action="?" method="post">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<? echo $service_contract["id"]?>">
+                          <i onclick="delete_(<?echo $service_contract['id']?>, '<? echo $service_contract['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                        </form>
                       </td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                      <td>X</td>
                     </tr>
-                    </tfoot>
+                    <?php } ?>
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -44,6 +86,17 @@
         </div>
   </section>
 </div>
+<script>
+  function edit_(id){
+    $("#edit"+id).submit(); 
+  }
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar el contrato "+name+"?")){
+      $("#delete"+id).submit();
+    }  
+  }
+</script>
   <!-- Footer -->
 <?php include("./../../components/commons/footerComponent.php")?>
 </body>

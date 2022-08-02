@@ -66,7 +66,7 @@ if ($conn->connect_error) {
             if($update_bank){
               ?>
               <div class="alert alert-success" role="alert">
-              Categoria modificada con exito!
+              Banco modificado con exito!
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
 
@@ -74,7 +74,7 @@ if ($conn->connect_error) {
             }else{
               ?>
               <div class="alert alert-dismissible alert-danger" role="alert">
-              Error al tratar de modificar la categoria.
+              Error al tratar de modificar el banco.
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
               <?php
@@ -98,7 +98,7 @@ if ($conn->connect_error) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro de categoria</h1>
+            <h1>Registro de banco</h1>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@ if ($conn->connect_error) {
                  
           
                     <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" name="name"  class="form-control" id="" placeholder="Nombre" value="<?php if(isset($bank))echo $bank['name'] ?>">
+                    <input type="text" name="name"  class="form-control" id="" placeholder="Banco" value="<?php if(isset($bank))echo $bank['name'] ?>">
                   
                   </div>
                 </div>

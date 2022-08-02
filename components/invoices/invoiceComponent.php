@@ -35,7 +35,7 @@
     LEFT JOIN invoices I ON SC.id_invoice = I.id
     WHERE I.id =$id
     GROUP BY S.id
-    "; echo $sql;
+    "; 
     $query_service_contract= mysqli_query($conn, $sql);
   }
 
@@ -100,13 +100,16 @@
                         <?php 
                           }
                         ?>
+                        <tr>
+                          <td colspan="3" style="text-align:right">Monto total:</td>
+                          <td><?php echo $total?> $</td>
+                        </tr>
                       </table>
                     </tr>
                    
                    
                     
                   </table>
-                  <?php echo $total?> $
                 </div>
                 <!-- /.card-body -->
               </div>
