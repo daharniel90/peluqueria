@@ -1,19 +1,29 @@
 <?php
- error_reporting(E_ALL);
+error_reporting(E_ALL);
 
-$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
-$db=mysql_select_db('peluqueria', $connect);
+$servername = "localhost";
+$username = "root";
+$password = "genesisdsr2003";
+$dbname = "peluqueria";
 
-if($db){ 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+}else{
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
     $sql="DELETE FROM users WHERE id=$id";
-    $query_users_delete= mysql_query($sql);
+    $query_users_delete= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT * FROM users";
-  $query_users= mysql_query($sql); 
+  $sql= "SELECT U.*, date_format(U.created_at, '%d-%m-%Y') AS f_created, R.name rol, R.functions FROM users U 
+  JOIN user_role UR ON U.id = UR.id_user
+  JOIN roles R ON UR.id_rol = R.id
+  ";
+  $query_users= mysqli_query($conn, $sql); 
 
   /*if($query_users){
     alert("usuario eliminado");
@@ -33,7 +43,7 @@ if($db){
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listadosssss de usuarios</h3>
+                  <h3 class="card-title">Listados de usuarios</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -45,12 +55,13 @@ if($db){
                       <td>Telefono</td>
                       <td>Direccion</td>
                       <td>Email</td>
+                      <td>Rol</td>
+                      <td>Funciones</td>
                       <td>Fecha de creacion</td>
-                      <td>Editar</td>
-                      <td>Eliminar</td>
+                      <td>Acciones</td>
                     </tr>
                     <?php 
-                      while($users=mysql_fetch_array($query_users)){
+                      while($users=mysqli_fetch_array($query_users)){
                     ?>
                     <tr>
                       <td><? echo $users["name"]?></td>
@@ -59,15 +70,20 @@ if($db){
                       <td><? echo $users["phone"]?></td>
                       <td><? echo $users["address"]?></td>
                       <td><? echo $users["email"]?></td>
-                      <td><? echo $users["created_at"]?></td>
+                      <td><? echo $users["rol"]?></td>
+                      <td><? echo $users["functions"]?></td>
+                      <td><? echo $users["f_created"]?></td>
                       <td>
-                        <i class="fas fa-user-edit"></i>
-                      </td>
-                      <td>
-                        <form id="delete" action="?" method="post">
+                      <form id="edit<?echo $users["id"]?>" action="userRegisterComponent.php" method="post">
+                          <input type="hidden" name="edit" value="edit">
+                          <input type="hidden" name="id" value="<? echo $users["id"]?>">
+                          <i onclick="edit_(<?echo $users['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                        </form>
+                      
+                        <form id="delete<?echo $users["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
-                          <i onclick="delete_()" class="fas fa-user-times"></i>
+                          <input type="hidden" name="id" value="<? echo $users["id"]?>">
+                          <i onclick="delete_(<?echo $users['id']?>, '<? echo $users['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                        
                       </td>
@@ -87,9 +103,14 @@ if($db){
 </div>
 
 <script>
-  function delete_(){
-    if(confirm("Estas seguro de eliminar a este usuario?")){
-      $("#delete").submit();
+  function edit_(id){
+    $("#edit"+id).submit(); 
+  }
+
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar este usuario "+name+"?")){
+      $("#delete"+id).submit();
     }  
   }
 </script>

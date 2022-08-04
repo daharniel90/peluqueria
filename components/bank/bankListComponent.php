@@ -1,27 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HairOneSalom</title>
+<?php
+ error_reporting(E_ALL);
 
-    <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+ $servername = "localhost";
+ $username = "root";
+ $password = "genesisdsr2003";
+ $dbname = "peluqueria";
+ 
+ // Create connection
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ // Check connection
+ if ($conn->connect_error) {
+   die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+ }else{
 
-</head>
-<body>
-  <?php include("./../../../components/commons/menuComponent.php")?>
-  <?php include("./../../../components/commons/sideBarComponent.php")?>
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $sql="DELETE FROM banks WHERE id=$id";
+    $query_bank_delete= mysqli_query($conn, $sql);
+  }
 
+  $sql= "SELECT * FROM banks";
+  $query_bank= mysqli_query($conn, $sql);
+
+}
+?>
+
+<?php include("./../../components/commons/sideBarComponent.php")?>
+
+<?php include("./../../components/commons/menuComponent.php")?>
 
 <div class="content-wrapper">
   <section class="content">
@@ -30,31 +36,42 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de cotizaciones</h3>
+                  <h3 class="card-title">Listado de bancos</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
-                    <thead>
+                    
                     <tr>
-                      <th>Rendering engine</th>
-                      <th>Browser</th>
-                      <th>Platform(s)</th>
-                      <th>Engine version</th>
-                      <th>CSS grade</th>
+                      <td>Nombre</td>
+                      <td>Fecha de creacion</td>
+                      <td>Acciones</td>
                     </tr>
-                    </thead>
-                    <tbody>
+
+                    <?php 
+                      while($bank=mysqli_fetch_array($query_bank)){
+                    ?>
                     <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 4.0
+                      <td><? echo $bank["name"]?></td>
+                      <td><? echo $bank["create_at"]?></td>
+                      <td>
+                        <form id="edit<?echo $bank["id"]?>" action="bankRegisterComponent.php" method="post">
+                          <input type="hidden" name="edit" value="edit">
+                          <input type="hidden" name="id" value="<? echo $bank["id"]?>">
+                          <i onclick="edit_(<?echo $bank['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                        </form>
+                      
+                        <form id="delete<?echo $bank["id"]?>" action="?" method="post">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<? echo $bank["id"]?>">
+                          <i onclick="delete_(<?echo $bank['id']?>, '<? echo $bank['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                        </form>
                       </td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                      <td>X</td>
                     </tr>
-                    </tfoot>
+                    <?php } ?>
+                   
+                   
+                    
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -64,8 +81,20 @@
         </div>
   </section>
 </div>
+<script>
+  function edit_(id){
+    $("#edit"+id).submit(); 
+  }
+
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar esta categoria "+name+"?")){
+      $("#delete"+id).submit();
+    }  
+  }
+</script>
 <!-- Footer -->
-<?php include("./../../../components/commons/footerComponent.php")?>
+<?php include("./../../components/commons/footerComponent.php")?>
 </body>
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

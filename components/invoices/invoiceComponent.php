@@ -15,12 +15,29 @@
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
-    $sql="DELETE FROM categories WHERE id=$id";
-    $query_categories_delete= mysqli_query($conn, $sql);
+    $sql="DELETE FROM invoices WHERE id=$id";
+    $query_invoice= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT * FROM categories";
-  $query_categories= mysqli_query($conn, $sql);
+  $sql= "SELECT I.*, C.name,last_name,dni,phone,address, Q.amount FROM invoices I
+  JOIN clients C ON I.id_client = C.id
+  JOIN quote Q ON I.id_quote = Q.id 
+  WHERE I.id = $id
+  ";
+  $query_invoice= mysqli_query($conn, $sql);
+  
+  if(mysqli_num_rows($query_invoice) > 0){
+    $sql= "SELECT S.id, S.name, SD.price, COUNT( S.id ) AS quantity, (COUNT( S.id )* price) AS total
+    FROM service_contract SC
+    LEFT JOIN users U ON SC.id_user = U.id
+    LEFT JOIN services S ON SC.id_service = S.id
+    LEFT JOIN service_detail SD ON SC.id_service_detail = SD.id
+    LEFT JOIN invoices I ON SC.id_invoice = I.id
+    WHERE I.id =$id
+    GROUP BY S.id
+    "; 
+    $query_service_contract= mysqli_query($conn, $sql);
+  }
 
 }
 ?>
@@ -36,39 +53,59 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de categorias</h3>
+                <img src="/peluqueria/logo-peluqueria.png" alt="AdminLTE Logo">
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
-                    
-                    <tr>
-                      <td>Nombre</td>
-                      <td>Fecha de creacion</td>
-                      <td>Acciones</td>
-                    </tr>
-
-                    <?php 
-                      while($categories=mysqli_fetch_array($query_categories)){
+                  <table id="example2" class="table table-borderless">
+                  <?php 
+                      while($invoice=mysqli_fetch_array($query_invoice)){
                     ?>
                     <tr>
-                      <td><? echo $categories["name"]?></td>
-                      <td><? echo $categories["date"]?></td>
-                      <td>
-                        <form id="edit<?echo $categories["id"]?>" action="categoryRegisterComponent.php" method="post">
-                          <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
-                          <i onclick="edit_(<?echo $categories['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
-                        </form>
-                      
-                        <form id="delete<?echo $categories["id"]?>" action="?" method="post">
-                          <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
-                          <i onclick="delete_(<?echo $categories['id']?>, '<? echo $categories['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
-                        </form>
-                      </td>
+                      <td>N# de factura: <? echo $invoice["id"]?></td>
+                      <td>fecha: <? echo $invoice["created_at"]?></td>
+                    </tr>
+                    <tr>
+                      <td>Facturar a: <? echo $invoice["name"]?> <? echo $invoice["last_name"]?></td>
+                    </tr>
+                    <tr>
+                      <td>C.I.: <? echo $invoice["dni"]?></td>
+                    </tr>
+                    <tr>
+                      <td>Direccion: <? echo $invoice["address"]?></td>
+                    </tr>
+                    <tr>
+                      <td>Telefono: <? echo $invoice["phone"]?></td>
                     </tr>
                     <?php } ?>
+                    <tr>
+                      <table class="table table-bordered">
+                        <tr>
+                          <td>Descripcion</td>
+                          <td>Cantidad</td>
+                          <td>Precio</td>
+                          <td>Total</td>
+                        </tr>
+                        <?php 
+                        $total = 0;
+                        while($service_contract=mysqli_fetch_array($query_service_contract)){
+                          $total = $total + $service_contract['total'];
+                        ?>
+                        <tr>
+                          <td><?php echo $service_contract['name']?></td>
+                          <td><?php echo $service_contract['quantity']?></td>
+                          <td><?php echo $service_contract['price']?> $</td>
+                          <td><?php echo $service_contract['total']?> $</td>
+                        </tr>
+                        <?php 
+                          }
+                        ?>
+                        <tr>
+                          <td colspan="3" style="text-align:right">Monto total:</td>
+                          <td><?php echo $total?> $</td>
+                        </tr>
+                      </table>
+                    </tr>
                    
                    
                     
@@ -81,18 +118,7 @@
         </div>
   </section>
 </div>
-<script>
-  function edit_(id){
-    $("#edit"+id).submit(); 
-  }
 
-
-  function delete_(id, name){
-    if(confirm("Estas seguro de eliminar esta categoria "+name+"?")){
-      $("#delete"+id).submit();
-    }  
-  }
-</script>
 <!-- Footer -->
 <?php include("./../../components/commons/footerComponent.php")?>
 </body>

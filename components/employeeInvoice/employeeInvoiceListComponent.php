@@ -15,12 +15,14 @@
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
-    $sql="DELETE FROM categories WHERE id=$id";
-    $query_categories_delete= mysqli_query($conn, $sql);
+    $sql="DELETE FROM employee_invoices WHERE id=$id";
+    $query_employee_invoice= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT * FROM categories";
-  $query_categories= mysqli_query($conn, $sql);
+  $sql= "SELECT employee_invoices.*, users.name,lastname,dni, quote.amount FROM employee_invoices
+  JOIN users ON employee_invoices.id_user = users.id
+  JOIN quote ON employee_invoices.id_quote = quote.id ";
+  $query_employee_invoice= mysqli_query($conn, $sql);
 
 }
 ?>
@@ -36,35 +38,43 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de categorias</h3>
+                  <h3 class="card-title">Listado de facturas de empleados</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                     
                     <tr>
+                      <td>Cedula</td>
                       <td>Nombre</td>
-                      <td>Fecha de creacion</td>
+                      <td>Apellido</td>
+                      <td>Cotizacion</td>
+                      <td>Total</td>
+                      <td>Factura pagada</td>
                       <td>Acciones</td>
                     </tr>
 
                     <?php 
-                      while($categories=mysqli_fetch_array($query_categories)){
+                      while($employee_invoice=mysqli_fetch_array($query_employee_invoice)){
                     ?>
                     <tr>
-                      <td><? echo $categories["name"]?></td>
-                      <td><? echo $categories["date"]?></td>
+                      <td><? echo $employee_invoice["dni"]?></td>
+                      <td><? echo $employee_invoice["name"]?></td>
+                      <td><? echo $employee_invoice["lastname"]?></td>
+                      <td><? echo $employee_invoice["amount"]?> Bs.</td>
+                      <td><? echo $employee_invoice["total"]?> $.</td>
+                      <td><? echo $employee_invoice["paid_bill"]?></td>
                       <td>
-                        <form id="edit<?echo $categories["id"]?>" action="categoryRegisterComponent.php" method="post">
+                        <form id="edit<?echo $employee_invoice["id"]?>" action="employeeInvoiceComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
-                          <i onclick="edit_(<?echo $categories['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                          <input type="hidden" name="id" value="<? echo $employee_invoice["id"]?>">
+                          <i onclick="edit_(<?echo $employee_invoice['id']?>)" class="fas fa-search cursor-over" title="Ver factura"></i>
                         </form>
                       
-                        <form id="delete<?echo $categories["id"]?>" action="?" method="post">
+                        <form id="delete<?echo $employee_invoice["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
-                          <i onclick="delete_(<?echo $categories['id']?>, '<? echo $categories['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<? echo $employee_invoice["id"]?>">
+                          <i onclick="delete_(<?echo $employee_invoice['id']?>, '<? echo $employee_invoice['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
@@ -82,13 +92,13 @@
   </section>
 </div>
 <script>
-  function edit_(id){
+
+function edit_(id){
     $("#edit"+id).submit(); 
   }
 
-
   function delete_(id, name){
-    if(confirm("Estas seguro de eliminar esta categoria "+name+"?")){
+    if(confirm("Estas seguro de eliminar esta factura "+name+lastname+"?")){
       $("#delete"+id).submit();
     }  
   }

@@ -1,27 +1,36 @@
 <?php
  error_reporting(E_ALL);
 
-$connect=mysql_connect('localhost', 'root', 'genesisdsr2003');
-$db=mysql_select_db('peluqueria', $connect);
-
-if($db){
+ $servername = "localhost";
+ $username = "root";
+ $password = "genesisdsr2003";
+ $dbname = "peluqueria";
+ 
+ // Create connection
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ // Check connection
+ if ($conn->connect_error) {
+   die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
+ }else{
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
     $sql="DELETE FROM quote WHERE id=$id";
-    $query_quote_delete= mysql_query($sql);
+    $query_quote_delete= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT * FROM quote";
-  $query_quote= mysql_query($sql);
+  $sql= "SELECT * FROM quote
+  ORDER BY id DESC";
+  $query_quote= mysqli_query($conn, $sql);
+
 }
 ?>
 
 <?php include("./../../../components/commons/sideBarComponent.php")?>
 
 <?php include("./../../../components/commons/menuComponent.php")?>
-<div class="content-wrapper">
 
+<div class="content-wrapper">
   <section class="content">
         <div class="container-fluid">
           <div class="row">
@@ -33,30 +42,37 @@ if($db){
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
+                    
                     <tr>
                       <td>Monto</td>
                       <td>Fecha de creacion</td>
-                      <td>Editar</td>
-                      <td>Eliminar</td>
+                      <td>Acciones</td>
                     </tr>
+
                     <?php 
-                      while($quote=mysql_fetch_array($query_quote)){
+                      while($quote=mysqli_fetch_array($query_quote)){
                     ?>
                     <tr>
-                      <td><? echo $quote["amount"]?></td>
+                      <td><? echo $quote["amount"]?> Bs.</td>
                       <td><? echo $quote["date"]?></td>
                       <td>
-                        <i class="fas fa-edit"></i>
-                      </td>
-                      <td>
-                        <form id="delete" action="?" method="post">
+                        <form id="edit<?echo $quote["id"]?>" action="quoteRegisterComponent.php" method="post">
+                          <input type="hidden" name="edit" value="edit">
+                          <input type="hidden" name="id" value="<? echo $quote["id"]?>">
+                          <i onclick="edit_(<?echo $quote['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
+                        </form>
+                      
+                        <form id="delete<?echo $quote["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
                           <input type="hidden" name="id" value="<? echo $quote["id"]?>">
-                          <i onclick="delete_()" class="fas fa-trash"></i>
+                          <i onclick="delete_(<?echo $quote['id']?>, '<? echo $quote['amount']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
                     <?php } ?>
+                   
+                   
+                    
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -65,12 +81,16 @@ if($db){
           </div>
         </div>
   </section>
-
 </div>
 <script>
-  function delete_(){
-    if(confirm("Estas seguro de eliminar esta cotizacion?")){
-      $("#delete").submit();
+  function edit_(id){
+    $("#edit"+id).submit(); 
+  }
+
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar esta cotizacion "+name+"?")){
+      $("#delete"+id).submit();
     }  
   }
 </script>

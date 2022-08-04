@@ -1,5 +1,5 @@
-<?php include("./../../components/commons/sideBarComponent.php")?>
-<?php include("./../../components/commons/menuComponent.php")?>
+<?php include("./../../../components/commons/sideBarComponent.php")?>
+<?php include("./../../../components/commons/menuComponent.php")?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 <?php
@@ -19,15 +19,15 @@ if ($conn->connect_error) {
 }else{
 
   if(isset($_POST['submit'])){
-    $name=$_POST['name'];
+    $amount=$_POST['amount'];
      
-      $sql="INSERT INTO categories (name) VALUES ('$name')";
-      $insert_categories= mysqli_query($conn, $sql);
+      $sql="INSERT INTO quote (amount) VALUES ('$amount')";
+      $insert_quote= mysqli_query($conn, $sql);
       
-      if($insert_categories){
+      if($insert_quote){
         ?>
         <div class="alert alert-success" role="alert">
-        Categoria registrada con exito!
+        Cotizacion registrada con exito!
         <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
         
         </div>
@@ -35,38 +35,38 @@ if ($conn->connect_error) {
       }else{
         ?>
         <div class="alert alert-dismissible alert-danger" role="alert">
-        Error al registrar la categoria.
+        Error al registrar la cotizacion.
         <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
         </div>
         <?php
       }
   }
 
-        //Show a category for edit
+        //Show a quote for edit
         if(isset($_POST['edit'])){
           $id=$_POST['id'];
 
 
-          $sql= "SELECT * FROM categories WHERE id=$id";
-          $query_category = mysqli_query($conn, $sql); 
-          $category = mysqli_fetch_array($query_category);
+          $sql= "SELECT * FROM quote WHERE id=$id";
+          $query_quote = mysqli_query($conn, $sql); 
+          $quote = mysqli_fetch_array($query_quote);
 
         }
 
 
 
-        //Update a new category
+        //Update a new quote
         if(isset($_POST['update'])){
-          $idCategory=$_POST['idCategory'];
-          $name=$_POST['name'];
+          $idQuote=$_POST['idQuote'];
+          $amount=$_POST['amount'];
 
-          $sql="UPDATE categories SET name = '$name' WHERE id = $idCategory ";
-          $update_categories= mysqli_query($conn, $sql);
+          $sql="UPDATE quote SET amount = '$amount' WHERE id = $idQuote ";
+          $update_quote= mysqli_query($conn, $sql);
             
-            if($update_categories){
+            if($update_quote){
               ?>
               <div class="alert alert-success" role="alert">
-              Categoria modificada con exito!
+              Cotizacion modificada con exito!
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
 
@@ -74,15 +74,15 @@ if ($conn->connect_error) {
             }else{
               ?>
               <div class="alert alert-dismissible alert-danger" role="alert">
-              Error al tratar de modificar la categoria.
+              Error al tratar de modificar la cotizacion.
               <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
               </div>
               <?php
             }
 
-            $sql= "SELECT * FROM categories WHERE id=$idCategory";
-            $query_category = mysqli_query($conn, $sql); 
-            $category = mysqli_fetch_array($query_category);
+            $sql= "SELECT * FROM quotes WHERE id=$idQuote";
+            $query_quote = mysqli_query($conn, $sql); 
+            $quote = mysqli_fetch_array($query_quote);
         }
 
 
@@ -98,7 +98,7 @@ if ($conn->connect_error) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Registro de categoria</h1>
+            <h1>Registro de cotizaciones</h1>
           </div>
         </div>
       </div>
@@ -110,17 +110,17 @@ if ($conn->connect_error) {
                 <div class="form-group">
                  
           
-                    <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" name="name"  class="form-control" id="" placeholder="Nombre" value="<?php if(isset($category))echo $category['name'] ?>">
+                    <label for="exampleInputEmail1">Monto</label>
+                    <input type="text" name="amount"  class="form-control" id=""  value="<?php if(isset($quote))echo $quote['amount'] ?>">
                   
                   </div>
                 </div>
                 <!-- /.card-body -->
-                <?php if(isset($category)){ ?>
-                  <input type="hidden" name="idCategory" value=<?php echo $category['id']?>>
+                <?php if(isset($quote)){ ?>
+                  <input type="hidden" name="idQuote" value=<?php echo $quote['id']?>>
                 <?php }?>
                 <div class="card-footer">
-                  <input type="submit" class="btn btn-primary" name=<?php if(isset($category)){echo "update"; }else { echo "submit";}?> value=<?php if(isset($category)){echo "Guardar"; }else { echo "Registrar";}?>>
+                  <input type="submit" class="btn btn-primary" name=<?php if(isset($quote)){echo "update"; }else { echo "submit";}?> value=<?php if(isset($quote)){echo "Guardar"; }else { echo "Registrar";}?>>
                 </div>
               </form>
             </div>
@@ -135,4 +135,4 @@ if ($conn->connect_error) {
     <!-- /.content -->
   </div>
   <!-- Footer -->
-<?php include("./../../components/commons/footerComponent.php")?>
+<?php include("./../../../components/commons/footerComponent.php")?>
