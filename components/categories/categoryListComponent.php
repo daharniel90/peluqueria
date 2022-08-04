@@ -1,17 +1,11 @@
 <?php
- error_reporting(E_ALL);
+include("./../../components/commons/sideBarComponent.php");
+include("./../../components/commons/menuComponent.php");
+include("./../../api/functions/database.php");
 
- $servername = "localhost";
- $username = "root";
- $password = "genesisdsr2003";
- $dbname = "peluqueria";
+ $conn = connect();
  
- // Create connection
- $conn = new mysqli($servername, $username, $password, $dbname);
- // Check connection
- if ($conn->connect_error) {
-   die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
- }else{
+ if(!$conn->connect_error){
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
@@ -25,9 +19,7 @@
 }
 ?>
 
-<?php include("./../../components/commons/sideBarComponent.php")?>
 
-<?php include("./../../components/commons/menuComponent.php")?>
 
 <div class="content-wrapper">
   <section class="content">
@@ -52,18 +44,18 @@
                       while($categories=mysqli_fetch_array($query_categories)){
                     ?>
                     <tr>
-                      <td><? echo $categories["name"]?></td>
-                      <td><? echo $categories["date"]?></td>
+                      <td><?php echo $categories["name"]?></td>
+                      <td><?php echo $categories["date"]?></td>
                       <td>
-                        <form id="edit<?echo $categories["id"]?>" action="categoryRegisterComponent.php" method="post">
+                        <form id="edit<?echo $categories['id']?>" action="categoryRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $categories['id']?>">
                           <i onclick="edit_(<?echo $categories['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                       
-                        <form id="delete<?echo $categories["id"]?>" action="?" method="post">
+                        <form id="delete<?echo $categories['id']?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $categories["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $categories['id']?>">
                           <i onclick="delete_(<?echo $categories['id']?>, '<? echo $categories['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>

@@ -1,20 +1,11 @@
-<?php include("./../../components/commons/sideBarComponent.php")?>
-<?php include("./../../components/commons/menuComponent.php")?>
-<?php
+<?php 
+include("./../../components/commons/sideBarComponent.php");
+include("./../../components/commons/menuComponent.php");
+include("./../../api/functions/database.php");
 
-error_reporting(E_ALL);
+$conn = connect();
 
-$servername = "localhost";
-$username = "root";
-$password = "genesisdsr2003";
-$dbname = "peluqueria";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-}else{
+if(!$conn->connect_error){
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
@@ -52,18 +43,18 @@ if ($conn->connect_error) {
                       while($services=mysqli_fetch_array($query_services)){
                     ?>
                     <tr>
-                      <td><? echo $services["name"]?></td>
+                      <td><?php echo $services['name']?></td>
                       <td><?php echo $services["category"]?></td>
-                      <td><? echo $services["date"]?></td>
+                      <td><?php echo $services["date"]?></td>
                       <td>
-                        <form id="edit<?echo $services["id"]?>" action="serviceRegisterComponent.php" method="post">
+                        <form id="edit<?echo $services['id']?>" action="serviceRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $services["id"]?>">
+                          <input type="hidden" name="id" value="<? echo $services['id']?>">
                           <i onclick="edit_(<?echo $services['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
-                        <form id="delete<?echo $services["id"]?>" action="?" method="post">
+                        <form id="delete<?echo $services['id']?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $services["id"]?>">
+                          <input type="hidden" name="id" value="<? echo $services['id']?>">
                           <i onclick="delete_(<?echo $services['id']?>, '<? echo $services['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>

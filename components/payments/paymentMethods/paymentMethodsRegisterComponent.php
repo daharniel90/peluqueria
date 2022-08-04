@@ -1,22 +1,11 @@
-<?php include("./../../../components/commons/sideBarComponent.php")?>
-<?php include("./../../../components/commons/menuComponent.php")?>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-<?php
- error_reporting(E_ALL);
+<?php 
+include("./../../../components/commons/sideBarComponent.php");
+include("./../../../components/commons/menuComponent.php");
+include("./../../../api/functions/database.php");
 
- $servername = "localhost";
- $username = "root";
- $password = "genesisdsr2003";
- $dbname = "peluqueria";
+ $conn = connect();
  
- // Create connection
- $conn = new mysqli($servername, $username, $password, $dbname);
- // Check connection
-
-if ($conn->connect_error) {
-  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-}else{
+ if(!$conn->connect_error){
 
   if(isset($_POST['submit'])){
     $name=$_POST['name'];
@@ -92,46 +81,25 @@ if ($conn->connect_error) {
 
 }
 ?>
-
+ <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-<<<<<<< HEAD
-        <div class="row ">
-          <div class="col-6 offse-3">
-            
-=======
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Registro de metodos de pago</h1>
->>>>>>> daharniel90/develop
           </div>
         </div>
       </div>
     </section>
 
               <!-- form start -->
-<<<<<<< HEAD
-              <div class= "row">
-                  <div class="col-6 offset-3"> 
-                  <h1 class="text-center">Registro métodos de pago</h1>
-                   <form id="quickForm">
-=======
               <form id="quickForm" method="post" action="?">
->>>>>>> daharniel90/develop
                 <div class="card-body">
                 <div class="form-group">
                  
           
                     <label for="exampleInputEmail1">Nombre</label>
-<<<<<<< HEAD
-                    <input type="text" name="nameU" class="form-control" id="" placeholder="Nombre">
-                  </div>
-              </div>
-                <!-- /.card-body -->
-                <div class="text-right">
-                <input type="submit" name="submit" class="btn btn-primary" value="Registrar">
-=======
                     <input type="text" name="name"  class="form-control" id="" placeholder="Nombre" value="<?php if(isset($payment_method))echo $payment_method['name'] ?>">
                   
                   </div>
@@ -142,7 +110,6 @@ if ($conn->connect_error) {
                 <?php }?>
                 <div class="card-footer">
                   <input type="submit" class="btn btn-primary" name=<?php if(isset($payment_method)){echo "update"; }else { echo "submit";}?> value=<?php if(isset($payment_method)){echo "Guardar"; }else { echo "Registrar";}?>>
->>>>>>> daharniel90/develop
                 </div>
               </form> 
                   </div>

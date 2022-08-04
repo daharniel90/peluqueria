@@ -1,23 +1,11 @@
-<?php include("./../../components/commons/menuComponent.php")?>
-<!-- Main Sidebar Container -->
-<?php include("./../../components/commons/sideBarComponent.php")?>
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-<?php
- error_reporting(E_ALL);
+<?php 
+include("./../../components/commons/menuComponent.php");
+include("./../../components/commons/sideBarComponent.php");
+include("./../../api/functions/database.php");
 
- $servername = "localhost";
- $username = "root";
- $password = "genesisdsr2003";
- $dbname = "peluqueria";
- 
- // Create connection
- $conn = new mysqli($servername, $username, $password, $dbname);
- // Check connection
+$conn = connect();
 
- if ($conn->connect_error) {
-  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-}else{
+if(!$conn->connect_error){
   
       $sql= "SELECT * FROM roles";
       $query_roles= mysqli_query($conn, $sql);
@@ -147,7 +135,7 @@
 
     }
 ?>
-
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">

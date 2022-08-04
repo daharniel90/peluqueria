@@ -3,7 +3,7 @@
 
  $servername = "localhost";
  $username = "root";
- $password = "genesisdsr2003";
+ $password = "1234567890";
  $dbname = "peluqueria";
  
  // Create connection

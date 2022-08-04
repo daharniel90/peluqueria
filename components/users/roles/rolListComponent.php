@@ -1,21 +1,11 @@
-<?php include("./../../../components/commons/sideBarComponent.php")?>
-<?php include("./../../../components/commons/menuComponent.php")?>
+<?php 
+include("./../../../components/commons/sideBarComponent.php");
+include("./../../../components/commons/menuComponent.php");
+include("./../../../api/functions/database.php");
 
-<?php
+$conn = connect();
 
-error_reporting(E_ALL);
-
-$servername = "localhost";
-$username = "root";
-$password = "genesisdsr2003";
-$dbname = "peluqueria";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-}else{
+if(!$conn->connect_error){
 
   if(isset($_POST['delete'])){
     $id=$_POST['id'];
