@@ -1,51 +1,5 @@
 <?php include("./../../../components/commons/sideBarComponent.php")?>
 <?php include("./../../../components/commons/menuComponent.php")?>
-<<<<<<< HEAD
-
-<?php
-error_reporting(E_ALL);
-
-$servername = "localhost";
-$username = "root";
-$password = "1234567890";
-$dbname = "peluqueria";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-
- if(isset($_POST['submit'])){
-   $name=$_POST['name'];
- 
-  if ($conn->connect_error) {
-    die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-  }else{  
-      $sql="INSERT INTO payment_methods (name) VALUES ('$name')";
-      $insert_services= mysqli_query($conn, $sql);
-        
-        if($insert_services){
-          ?>
-          <div class="alert alert-success" role="alert">
-          Método registrado con exito!
-          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
-          </div>
-
-          <?php
-        }else{
-          ?>
-          <div class="alert alert-dismissible alert-danger" role="alert">
-          Error al registrar el método.
-          <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
-          </div>
-          <?php
-        }
-    }
-  }
-?>
-
- 
-=======
->>>>>>> daharniel90/develop
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 <?php
