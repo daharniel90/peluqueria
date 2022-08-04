@@ -1,6 +1,9 @@
-<?php include('./components/commons/menuComponent.php')?>
+<?php include("./components/commons/menuComponent.php")?>
 <!-- Main Sidebar Container -->
 <?php include("./components/commons/sideBarComponent.php")?>
+<?php include("./components/contracts/contractsRegisterComponent.php")?>
+
+
 
 
 
@@ -64,7 +67,7 @@
         ?>
           <div class="col-lg-4 col-8">
             <!-- small box -->
-            <div class="small-box <?php echo $category['color']?>">
+            <div class="small-box btn btn-<?php echo $category['color']?>" onClick="getIdCategory(<?php echo $category['id']?>)">
               <div class="inner">
                 <h3 class="textUpper"><?php echo $category['name']?></h3>
 
@@ -78,6 +81,7 @@
           </div>
 
           <?php }?>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
 
          
           </div>
@@ -607,6 +611,11 @@
   </div>
   <!-- /.content-wrapper -->
 
+  <script>
+   function getIdCategory(id){
+     window.location.href = "/peluqueria/index.php?idCategory="+id;
+   }
+  </script>
 
    <!-- footer -->
    <?php include("./components/commons/footerComponent.php")?>

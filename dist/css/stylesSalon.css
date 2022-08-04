@@ -19,3 +19,7 @@
 .textUpper{
     text-transform: capitalize;
 }
+
+.itemBlock{
+    display: block !important;
+}
