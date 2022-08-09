@@ -1,4 +1,6 @@
 <?php 
+include("./../../components/commons/sideBarComponent.php");
+include("./../../components/commons/menuComponent.php");
 include("./../../api/functions/database.php");
 
 $conn = connect();
@@ -18,9 +20,7 @@ if(!$conn->connect_error){
 }
 ?>
 
-<?php include("./../../components/commons/sideBarComponent.php")?>
 
-<?php include("./../../components/commons/menuComponent.php")?>
 
 <div class="content-wrapper">
   <section class="content">
