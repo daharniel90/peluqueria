@@ -20,6 +20,10 @@ if ($conn->connect_error) {
 
     $sql= "SELECT * FROM services WHERE id_category = $idCategory";
     $query_services= mysqli_query($conn, $sql); echo $sql;
+    $sql= "SELECT * FROM users WHERE id = $idCategory";
+    $query_users= mysqli_query($conn, $sql);
+    $sql= "SELECT * FROM clients WHERE id = $idCategory";
+    $query_clients= mysqli_query($conn, $sql);
   }
   
 }
@@ -40,17 +44,39 @@ if ($conn->connect_error) {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Recipient:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <label for="recipient-name" class="col-form-label">Servicios:</label>
+              <select type="select" class="form-control" id="recipient-name">
+
+                <option value="">-</option>
+                <?php while($services=mysqli_fetch_array($query_services)){?>
+                <option value="<? echo $services["id"]?>"><? echo $services["name"]?></option>
+                  <?php }?>
+              </select>
             </div>
             <div class="form-group">
-              <label for="message-text" class="col-form-label">Message:</label>
-              <textarea class="form-control" id="message-text"></textarea>
+              <label for="recipient-name" class="col-form-label">Usuarios:</label>
+              <select type="select" class="form-control" id="recipient-name">
+
+                <option value="">-</option>
+                <?php while($users=mysqli_fetch_array($query_users)){?>
+                <option value="<? echo $users["id"]?>"><? echo $users["name"]?> <? echo $users["lastname"]?></option>
+                  <?php }?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Clientes:</label>
+              <select type="select" class="form-control" id="recipient-name">
+
+                <option value="">-</option>
+                <?php while($clients=mysqli_fetch_array($query_clients)){?>
+                <option value="<? echo $clients["id"]?>"><? echo $clients["name"]?> <? echo $clients["last_name"]?></option>
+                  <?php }?>
+              </select>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="button" class="btn btn-primary">Send message</button>
         </div>
       </div>
