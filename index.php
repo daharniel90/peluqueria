@@ -64,10 +64,11 @@
 
         <?php 
           while($category=mysqli_fetch_array($query_categories)){
+            hola($category['id'], $category['name'], $category['color']);
         ?>
           <div class="col-lg-4 col-8">
             <!-- small box -->
-            <div class="small-box btn btn-<?php echo $category['color']?>" onClick="getIdCategory(<?php echo $category['id']?>)">
+            <div data-toggle="modal" data-target="#exampleModal<?php echo $category['id']?>" data-whatever="@mdo" class="small-box btn btn-<?php echo $category['color']?>">
               <div class="inner">
                 <h3 class="textUpper"><?php echo $category['name']?></h3>
 

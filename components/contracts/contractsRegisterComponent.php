@@ -1,6 +1,10 @@
 
 <?php
 
+function hola($idCategory, $nameCategory, $color){
+
+
+
 error_reporting(E_ALL);
 
 $servername = "localhost";
@@ -15,16 +19,16 @@ if ($conn->connect_error) {
   die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
 }else{
 
-  if(isset($_GET['idCategory'])){
-    $idCategory = $_GET['idCategory'];
+
+    
 
     $sql= "SELECT * FROM services WHERE id_category = $idCategory";
-    $query_services= mysqli_query($conn, $sql); echo $sql;
-    $sql= "SELECT * FROM users WHERE id = $idCategory";
+    $query_services= mysqli_query($conn, $sql); 
+    $sql= "SELECT * FROM users ";
     $query_users= mysqli_query($conn, $sql);
-    $sql= "SELECT * FROM clients WHERE id = $idCategory";
+    $sql= "SELECT * FROM clients";
     $query_clients= mysqli_query($conn, $sql);
-  }
+  
   
 }
 
@@ -32,11 +36,11 @@ if ($conn->connect_error) {
 ?>
 
 
-  <div class="modal <?php echo isset($_GET['idCategory']) ? 'itemBlock' : ''?>" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" >
+  <div class="modal" id="exampleModal<? echo $idCategory?>" tabindex="-1" aria-labelledby="exampleModalLabel" >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <div class="modal-header btn-<?php echo $color?>">
+          <h5 class="modal-title textUpper" id="exampleModalLabel"><? echo $nameCategory?></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -82,3 +86,7 @@ if ($conn->connect_error) {
       </div>
     </div>
   </div>
+
+<?php
+}
+?>
