@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 
 function connect(){
   
-
     $servername = "localhost";
     $username = "root";
     $password = "1234567890";
