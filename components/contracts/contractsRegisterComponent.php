@@ -37,7 +37,7 @@ if ($conn->connect_error) {
     AND i.rejected = FALSE
     AND i.paid_bill = FALSE
     ";
-    $sql= "SELECT * FROM users WHERE id not in($sqlInvoice)";
+    $sql= "SELECT * FROM users WHERE id not in($sqlInvoice) AND active = 1";
     $query_users= mysqli_query($conn, $sql);
     $sql= "SELECT * FROM clients";
     $query_clients= mysqli_query($conn, $sql);

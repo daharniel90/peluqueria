@@ -54,7 +54,7 @@ include("./api/functions/global.php");
     if(!$active){
       $active_msg = 'activado';
     }else{
-      $active_msg = 'desactivar';
+      $active_msg = 'desactivado';
     }
 
     $sql= "UPDATE users SET active = !active WHERE id = $id";
@@ -62,7 +62,7 @@ include("./api/functions/global.php");
     if($query_active){
       $alert = createMsgAlert('success', "Usuario $active_msg con exito!");
     }else{
-      $alert = createMsgAlert('danger', "Error al tratar de $active_msg el usuario!");
+      $alert = createMsgAlert('danger', "Error, el usuario no pudo ser $active_msg");
     }
   }
 
@@ -91,6 +91,8 @@ include("./api/functions/global.php");
   WHERE U.id not in($sqlInvoice)
   ";
   $query_users= mysqli_query($conn, $sql);
+
+  
   
 }
 ?>
@@ -278,7 +280,7 @@ include("./api/functions/global.php");
                    
                     <span class="text"><? echo $users["rol"]?> <? echo $users["name"]?> <? echo $users["lastname"]?> </span>
                     <!-- Emphasis label -->
-                    <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                    <small class="<?php echo $users['active'] == true ? 'badge badge-primary' : 'badge badge-secondary' ?>"><i class="<?php echo $users['active'] == true ? 'fas fa-user-check' : 'far fa-clock'?>"></i> <?php echo $users['active'] == true ? 'Activo' : 'Inactivo'?></small>
                     <!-- General tools such as edit or delete-->
                     
                   </li>
@@ -370,8 +372,10 @@ include("./api/functions/global.php");
   }
 
   function rejectInvoice(id){
+  if(confirm("Estas seguro de anular la factura N# "+id+"?")){
     $("#formReject"+id).submit();
-  }
+  }  
+}
 
   function activeUser(id){
     $("#formActive"+id).submit();
@@ -389,18 +393,4 @@ include("./api/functions/global.php");
 
 
 
-   <?php
-   $number =0;
-   if($number > 0){
-      echo "positivo ";
-   }else if($number == 0){
-    echo "neutro ";
-   }
-   else{
-    echo "negativo ";
-   }
    
-   
-   echo $number > 0 ? "positivo" : ($number == 0 ? "neutro" : "negativo");
-   
-   ?>
