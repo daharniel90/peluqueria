@@ -13,30 +13,17 @@ include("./../../../api/functions/database.php");
     $query_payment_method_delete= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT * FROM payment_methods";
-  $query_payment_method= mysqli_query($conn, $sql);
-
-}
-
-
-
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Ha fallado la conexión a base de datos: " . $conn->connect_error);
-}else{
-
-  if(isset($_POST['delete'])){
-    $id=$_POST['id'];
-    $sql="DELETE FROM payment_methods WHERE id=$id";
-    $query_payment_methods_delete = mysqli_query($conn, $sql);
-  }
-
-  $sql= "SELECT * FROM payment_methods";
+  $sql= "SELECT PM.*, B.name bank FROM payment_methods PM
+  JOIN banks B ON PM.id_bank = banks.id
+  ";
   $query_payment_methods= mysqli_query($conn, $sql);
+
 }
+
+
+
+
+
 ?>
 
 <div class="content-wrapper">
@@ -52,7 +39,17 @@ if ($conn->connect_error) {
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
-                          <input type="hidden" name="id" value="<? echo $payment_method["id"]?>">
+                    <tr>
+                      <td>Nombre</td>
+                      <td>Banco</td>
+                    </tr>
+                    <?php 
+                    while($payment_method=mysqli_fetch_array($query_payment_methods)){
+                    ?>
+                    <tr>
+                      <td><?php echo $payment_method['name']?></td>
+                      <td><?php echo $payment_method['bank']?></td>
+                          <input type="hidden" name="id" value="<? echo $payment_methodl["id"]?>">
                           <i onclick="delete_(<?echo $payment_method['id']?>, '<? echo $payment_method['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
@@ -60,7 +57,7 @@ if ($conn->connect_error) {
                   
                    
                    
-                    
+                    <?php } ?>
                   </table>
                 </div>
                 <!-- /.card-body -->

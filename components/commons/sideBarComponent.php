@@ -307,12 +307,6 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-              <a href="/peluqueria/components/contracts/contractsRegisterComponent.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Nuevo contrato</p>
-                </a>
-              </li>
-              <li class="nav-item">
               <a href="/peluqueria/components/contracts/contractsListComponent.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Contratos</p>

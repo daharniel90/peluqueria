@@ -1,7 +1,7 @@
 <?php
 include("./../../components/commons/sideBarComponent.php");
 include("./../../components/commons/menuComponent.php");
-include("./../../api/functions/database.php");
+include("./api/functions/database.php");
 
 $conn = connect();
 
@@ -19,11 +19,6 @@ if(!$conn->connect_error){
   ";
   $query_users= mysqli_query($conn, $sql); 
 
-  /*if($query_users){
-    alert("usuario eliminado");
-  }else{
-    alert("No se se pudo elimiar el usuario");
-  }*/
 }
 ?>
 

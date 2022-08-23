@@ -15,8 +15,8 @@ include("./../../api/functions/database.php");
 
   $sql= "SELECT SC.*, U.name uname,lastname,dni, S.name, SD.price, I.id FROM service_contract SC
   JOIN users U ON SC.id_user = U.id
-  JOIN services S ON SC.id_service = S.id
   JOIN service_detail SD ON SC.id_service_detail = SD.id
+  JOIN services S ON SD.id_service = S.id
   JOIN invoices I ON SC.id_invoice = I.id";
   $query_service_contract= mysqli_query($conn, $sql);
 }
@@ -36,8 +36,7 @@ include("./../../api/functions/database.php");
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                     <tr>
-                      <td>Nombre</td>
-                      <td>Apellido</td>
+                      <td colspan=2>Usuario</td>
                       <td>Cedula</td>
                       <td>Servicio</td>
                       <td>Precio</td>
@@ -52,7 +51,7 @@ include("./../../api/functions/database.php");
                       <td><?php echo $service_contract["lastname"]?></td>
                       <td><?php echo $service_contract["dni"]?></td>
                       <td><?php echo $service_contract["name"]?></td>
-                      <td><?php echo $service_contract["price"]?></td>
+                      <td><?php echo $service_contract["price"]?> $</td>
                       <td><?php echo $service_contract["id"]?></td>
                       <td>
                         <form id="edit<?echo $service_contract["id"]?>" action="contractsRegisterComponent.php" method="post">

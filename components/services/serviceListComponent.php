@@ -13,8 +13,10 @@ if(!$conn->connect_error){
     $query_services_delete = mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT S.*, C.name category FROM services S
+  $sql= "SELECT S. * , C.name category, SD.price
+  FROM services S
   JOIN categories C ON S.id_category = C.id
+  JOIN service_detail SD ON S.id = SD.id_service
   ";
   $query_services= mysqli_query($conn, $sql);
 }
@@ -34,7 +36,8 @@ if(!$conn->connect_error){
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                     <tr>
-                      <td>Nombre</td>
+                      <td>Nombre</td> 
+                      <td>Precio</td>
                       <td>Categoria</td>
                       <td>Fecha de creacion</td>
                       <td>Acciones</td>
@@ -44,6 +47,7 @@ if(!$conn->connect_error){
                     ?>
                     <tr>
                       <td><?php echo $services['name']?></td>
+                      <td><?php echo $services["price"]?> $</td>
                       <td><?php echo $services["category"]?></td>
                       <td><?php echo $services["date"]?></td>
                       <td>

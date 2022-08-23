@@ -1,7 +1,14 @@
 <?php include("./components/commons/menuComponent.php")?>
 <!-- Main Sidebar Container -->
-<?php include("./components/commons/sideBarComponent.php")?>
-<?php include("./components/contracts/contractsRegisterComponent.php")?>
+<?php 
+include("./components/commons/sideBarComponent.php");
+include("./components/contracts/contractsRegisterComponent.php");
+include("./components/invoices/invoiceDetail.php");
+include("./api/functions/global.php");
+?>
+
+
+
 
 
 
@@ -26,6 +33,65 @@
   $sql= "SELECT * FROM categories";
   $query_categories= mysqli_query($conn, $sql);
 
+  
+  if(isset($_POST["id"])){
+    $id = $_POST["id"];
+  }
+
+  if(isset($_POST["reject"])){
+
+    $sql= "UPDATE invoices SET rejected = TRUE WHERE id = $id";
+    $query_reject= mysqli_query($conn, $sql);
+    if($query_reject){
+      $alert = createMsgAlert('success', 'Factura anulada con exito!');
+    }else{
+      $alert = createMsgAlert('danger', 'Error al tratar de anular la factura!');
+    } 
+  }
+
+  if(isset($_POST["active_user"])){
+    $active = $_POST["status"];
+    if(!$active){
+      $active_msg = 'activado';
+    }else{
+      $active_msg = 'desactivar';
+    }
+
+    $sql= "UPDATE users SET active = !active WHERE id = $id";
+    $query_active= mysqli_query($conn, $sql);
+    if($query_active){
+      $alert = createMsgAlert('success', "Usuario $active_msg con exito!");
+    }else{
+      $alert = createMsgAlert('danger', "Error al tratar de $active_msg el usuario!");
+    }
+  }
+
+  $sqlInvoice= "SELECT I. * , C.name name_client, last_name, C.dni, Q.amount
+  FROM invoices I
+  JOIN clients C ON I.id_client = C.id
+  JOIN quote Q ON I.id_quote = Q.id
+  WHERE DATE_FORMAT(i.created_at, '%d-%m-%Y') = DATE_FORMAT(NOW(), '%d-%m-%Y')
+  ";
+  $query_invoice= mysqli_query($conn, $sqlInvoice);
+
+  $sqlInvoice= "SELECT U.id
+  FROM invoices I
+  JOIN clients C ON I.id_client = C.id
+  JOIN quote Q ON I.id_quote = Q.id
+  JOIN service_contract SC ON SC.id_invoice = I.id
+  JOIN users U ON SC.id_user = U.id 
+  WHERE DATE_FORMAT(i.created_at, '%d-%m-%Y') = DATE_FORMAT(NOW(), '%d-%m-%Y')
+  AND i.rejected = FALSE
+  AND i.paid_bill = FALSE
+  ";
+
+  $sql= "SELECT U.*, R.name rol FROM users U
+  JOIN user_role UR ON U.id = UR.id_user
+  JOIN roles R ON UR.id_rol = R.id
+  WHERE U.id not in($sqlInvoice)
+  ";
+  $query_users= mysqli_query($conn, $sql);
+  
 }
 ?>
 
@@ -33,11 +99,9 @@
 
 
 <div class="wrapper">
-
-
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  <?php if(isset($alert)){ alert($alert); } ?>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -64,7 +128,7 @@
 
         <?php 
           while($category=mysqli_fetch_array($query_categories)){
-            hola($category['id'], $category['name'], $category['color']);
+            createContract($category['id'], $category['name'], $category['color']);
         ?>
           <div class="col-lg-4 col-8">
             <!-- small box -->
@@ -82,262 +146,21 @@
           </div>
 
           <?php }?>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+          <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button-->
 
          
           </div>
 
         
+            <div class="row">
+            <section class="col-lg-8 connectedSortable">
 
-
-
-
-        <!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-            <!-- Custom tabs (Charts with tabs)-->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fas fa-chart-pie mr-1"></i>
-                  Sales
-                </h3>
-                <div class="card-tools">
-                  <ul class="nav nav-pills ml-auto">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                    </li>
-                  </ul>
-                </div>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content p-0">
-                  <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart"
-                       style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                   </div>
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                    <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                  </div>
-                </div>
-              </div><!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            <!-- DIRECT CHAT -->
-            <div class="card direct-chat direct-chat-primary">
-              <div class="card-header">
-                <h3 class="card-title">Direct Chat</h3>
-
-                <div class="card-tools">
-                  <span title="3 New Messages" class="badge badge-primary">3</span>
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
-                    <i class="fas fa-comments"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <!-- Conversations are loaded here -->
-                <div class="direct-chat-messages">
-                  <!-- Message. Default to the left -->
-                  <div class="direct-chat-msg">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-left">Alexander Pierce</span>
-                      <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      Is this template really for free? That's unbelievable!
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-right">Sarah Bullock</span>
-                      <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      You better believe it!
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                  <!-- Message. Default to the left -->
-                  <div class="direct-chat-msg">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-left">Alexander Pierce</span>
-                      <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      Working with AdminLTE on a great new app! Wanna join?
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-right">Sarah Bullock</span>
-                      <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      I would love to.
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-                </div>
-                <!--/.direct-chat-messages-->
-
-                <!-- Contacts are loaded here -->
-                <div class="direct-chat-contacts">
-                  <ul class="contacts-list">
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Count Dracula
-                            <small class="contacts-list-date float-right">2/28/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">How have you been? I was...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Sarah Doe
-                            <small class="contacts-list-date float-right">2/23/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">I will be waiting for...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nadia Jolie
-                            <small class="contacts-list-date float-right">2/20/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">I'll call you back at...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nora S. Vans
-                            <small class="contacts-list-date float-right">2/10/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Where is your new...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            John K.
-                            <small class="contacts-list-date float-right">1/27/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Can I take a look at...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Kenneth M.
-                            <small class="contacts-list-date float-right">1/4/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Never mind I found...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                  </ul>
-                  <!-- /.contacts-list -->
-                </div>
-                <!-- /.direct-chat-pane -->
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                <form action="#" method="post">
-                  <div class="input-group">
-                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                    <span class="input-group-append">
-                      <button type="button" class="btn btn-primary">Send</button>
-                    </span>
-                  </div>
-                </form>
-              </div>
-              <!-- /.card-footer-->
-            </div>
-            <!--/.direct-chat -->
-
-            <!-- TO DO List -->
+            <!-- LISTA DE ESPERA -->
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  To Do List
+                  Facturas.
                 </h3>
 
                 <div class="card-tools">
@@ -352,114 +175,121 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+              <table class="table table-bordered table-hover">
+                    
+                    <tr>
+                      <td>N# de factura</td>
+                      <td>Cedula del cliente</td>
+                      <td colspan=2>Cliente</td>
+                      <td>Cotizacion</td>
+                      <td>Total</td>
+                      <td>Estado</td>
+                      <td>Acciones</td>
+                    </tr>
+                      <?php 
+                      if(mysqli_num_rows($query_invoice)> 0 ){
+
+                      
+                        while($invoice=mysqli_fetch_array($query_invoice)){
+                          ?>
+                          <tr>
+                            <td><? echo $invoice["id"]?></td>
+                            <td><? echo $invoice["dni"]?></td>
+                            <td><? echo $invoice["name_client"]?></td>
+                            <td><? echo $invoice["last_name"]?></td>
+                            <td><? echo $invoice["amount"]?> Bs.</td>
+                            <td><? echo $invoice["total"]?> $.</td>
+                            <td><small class="badge badge-<?php echo $invoice['rejected'] > 0 ? 'danger' : ($invoice['paid_bill'] == 0 ? 'warning' : 'success'); ?>"> <?php echo $invoice['rejected'] > 0 ? 'anulada' : ($invoice["paid_bill"] == 0 ? 'No Pagada' : 'Pagada')?></small>
+                            <td >
+                              <i onClick="viewDetail(<? echo $invoice['id']?>)" class="fas fa-search cursor-over text-primary" title="Ver factura"></i>
+                              <?php if($invoice['rejected'] == 0 && $invoice['paid_bill'] == 0){ ?>
+                                <i onClick="rejectInvoice(<? echo $invoice['id']?>)" class="fas fa-ban cursor-over text-danger" title="Anular factura"></i>
+                                <form id="formReject<? echo $invoice['id']?>" action="?" method="POST">
+                                  <input type="hidden" name="id" value="<? echo $invoice['id']?>">
+                                  <input type="hidden" name="reject">
+                                </form>
+                              
+                              <i class="fas fa-money-check-alt cursor-over text-success" title="Pagar"></i>
+                              <?php }?>
+                            </td>
+                       
+                          </tr>
+
+                          <tr class="itemHidden" id="detailContract<? echo $invoice["id"]?>">
+                            <td colspan="9">
+                            <?php echo getInvoiceDetail($conn, $sql, $invoice["id"]);?>
+                          </td>
+                          </tr>
+                          
+               
+                          <?php  } 
+                        }else{
+                          ?>
+                          <div class="alert alert-warning" role="alert">
+                            Aun no hay facturas registradas el dia de hoy. Crea una!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
+                            
+                          </div>
+                          <?php
+                        }
+                          
+                          ?>
+              </table>
+              </div>
+              
+            <!-- /.card -->
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-4 connectedSortable">
+
+
+
+          <!-- LISTA DE EMPLEADOS -->
+          <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Disponibilidad de empleados.
+                </h3>
+
+                
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                    <?php 
+                      while($users=mysqli_fetch_array($query_users)){
+                    ?>
                 <ul class="todo-list" data-widget="todo-list">
                   <li>
-                    <!-- drag handle -->
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
+                    
                     <!-- checkbox -->
                     <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                      <label for="todoCheck1"></label>
+                      <form id="formActive<?php echo $users['id']?>" action="?" method="POST">
+                        <input type="hidden" value="<?php echo $users['id']?>" name="id">
+                        <input type="hidden" value="<?php echo $users['active']?>" name="status">
+                        <input type="hidden" value="" name="active_user">
+                      </form>
+                      <input type="checkbox" <?php echo $users['active'] == true ? '' : 'checked' ?> value="<?php echo $users['active'] == 1 ? false : true ?>" name="active" onChange="activeUser(<?php echo $users['id']?>)">
+                      <label for="todoCheck"></label>
+                      
                     </div>
                     <!-- todo text -->
-                    <span class="text">Design a nice theme</span>
+                   
+                    <span class="text"><? echo $users["rol"]?> <? echo $users["name"]?> <? echo $users["lastname"]?> </span>
                     <!-- Emphasis label -->
                     <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
                     <!-- General tools such as edit or delete-->
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
+                    
                   </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
-                      <label for="todoCheck2"></label>
-                    </div>
-                    <span class="text">Make the theme responsive</span>
-                    <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                      <label for="todoCheck3"></label>
-                    </div>
-                    <span class="text">Let theme shine like a star</span>
-                    <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                      <label for="todoCheck4"></label>
-                    </div>
-                    <span class="text">Let theme shine like a star</span>
-                    <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                      <label for="todoCheck5"></label>
-                    </div>
-                    <span class="text">Check your messages and notifications</span>
-                    <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                      <label for="todoCheck6"></label>
-                    </div>
-                    <span class="text">Let theme shine like a star</span>
-                    <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
+                  
+                 
+                  
                 </ul>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
-              </div>
+              
+              <?php 
+
+                      } ?>
             </div>
             <!-- /.card -->
           </section>
@@ -467,101 +297,13 @@
           <!-- right col (We are only adding the ID to make the widgets sortable)-->
           <section class="col-lg-5 connectedSortable">
 
-            <!-- Map card -->
-            <div class="card bg-gradient-primary">
-              <div class="card-header border-0">
-                <h3 class="card-title">
-                  <i class="fas fa-map-marker-alt mr-1"></i>
-                  Visitors
-                </h3>
-                <!-- card tools -->
-                <div class="card-tools">
-                  <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                    <i class="far fa-calendar-alt"></i>
-                  </button>
-                  <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-                <!-- /.card-tools -->
-              </div>
-              <div class="card-body">
-                <div id="world-map" style="height: 250px; width: 100%;"></div>
-              </div>
-              <!-- /.card-body-->
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <div id="sparkline-1"></div>
-                    <div class="text-white">Visitors</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-2"></div>
-                    <div class="text-white">Online</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-3"></div>
-                    <div class="text-white">Sales</div>
-                  </div>
-                  <!-- ./col -->
-                </div>
-                <!-- /.row -->
-              </div>
-            </div>
-            <!-- /.card -->
 
-            <!-- solid sales graph -->
-            <div class="card bg-gradient-info">
-              <div class="card-header border-0">
-                <h3 class="card-title">
-                  <i class="fas fa-th mr-1"></i>
-                  Sales Graph
-                </h3>
+          </div>
 
-                <div class="card-tools">
-                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
+            
 
-                    <div class="text-white">Mail-Orders</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
 
-                    <div class="text-white">Online</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
-
-                    <div class="text-white">In-Store</div>
-                  </div>
-                  <!-- ./col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.card-footer -->
-            </div>
-            <!-- /.card -->
+                
 
             <!-- Calendar -->
             <div class="card bg-gradient-success">
@@ -616,7 +358,49 @@
    function getIdCategory(id){
      window.location.href = "/peluqueria/index.php?idCategory="+id;
    }
+
+   function viewDetail(id){
+    
+    if($("#detailContract"+id).hasClass("itemHidden")){
+      $("#detailContract"+id).removeClass("itemHidden");
+    }else{
+      $("#detailContract"+id).addClass("itemHidden");
+    }
+
+  }
+
+  function rejectInvoice(id){
+    $("#formReject"+id).submit();
+  }
+
+  function activeUser(id){
+    $("#formActive"+id).submit();
+  }
+  
   </script>
 
    <!-- footer -->
    <?php include("./components/commons/footerComponent.php")?>
+
+
+
+
+
+
+
+
+   <?php
+   $number =0;
+   if($number > 0){
+      echo "positivo ";
+   }else if($number == 0){
+    echo "neutro ";
+   }
+   else{
+    echo "negativo ";
+   }
+   
+   
+   echo $number > 0 ? "positivo" : ($number == 0 ? "neutro" : "negativo");
+   
+   ?>

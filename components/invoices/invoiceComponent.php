@@ -2,6 +2,7 @@
 include("./../../components/commons/sideBarComponent.php");
 include("./../../components/commons/menuComponent.php");
 include("./../../api/functions/database.php");
+include("./invoiceDetail.php");
 
  $conn = connect();
  
@@ -21,20 +22,16 @@ include("./../../api/functions/database.php");
   $query_invoice= mysqli_query($conn, $sql);
   
   if(mysqli_num_rows($query_invoice) > 0){
-    $sql= "SELECT S.id, S.name, SD.price, COUNT( S.id ) AS quantity, (COUNT( S.id )* price) AS total
-    FROM service_contract SC
-    LEFT JOIN users U ON SC.id_user = U.id
-    LEFT JOIN services S ON SC.id_service = S.id
-    LEFT JOIN service_detail SD ON SC.id_service_detail = SD.id
-    LEFT JOIN invoices I ON SC.id_invoice = I.id
-    WHERE I.id =$id
-    GROUP BY S.id
-    "; 
-    $query_service_contract= mysqli_query($conn, $sql);
+    $tableDetail = getInvoiceDetail($conn, $sql, $id);
   }
 
 }
+
+
+
 ?>
+
+
 
 
 
@@ -71,32 +68,7 @@ include("./../../api/functions/database.php");
                     </tr>
                     <?php } ?>
                     <tr>
-                      <table class="table table-bordered">
-                        <tr>
-                          <td>Descripcion</td>
-                          <td>Cantidad</td>
-                          <td>Precio</td>
-                          <td>Total</td>
-                        </tr>
-                        <?php 
-                        $total = 0;
-                        while($service_contract=mysqli_fetch_array($query_service_contract)){
-                          $total = $total + $service_contract['total'];
-                        ?>
-                        <tr>
-                          <td><?php echo $service_contract['name']?></td>
-                          <td><?php echo $service_contract['quantity']?></td>
-                          <td><?php echo $service_contract['price']?> $</td>
-                          <td><?php echo $service_contract['total']?> $</td>
-                        </tr>
-                        <?php 
-                          }
-                        ?>
-                        <tr>
-                          <td colspan="3" style="text-align:right">Monto total:</td>
-                          <td><?php echo $total?> $</td>
-                        </tr>
-                      </table>
+                      <?php echo isset($tableDetail) ? $tableDetail : '<td></td>'?>
                     </tr>
                    
                    

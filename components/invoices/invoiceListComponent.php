@@ -13,9 +13,14 @@ include("./../../api/functions/database.php");
     $query_invoice= mysqli_query($conn, $sql);
   }
 
-  $sql= "SELECT invoices.*, clients.name,last_name,dni, quote.amount FROM invoices
-  JOIN clients ON invoices.id_client = clients.id
-  JOIN quote ON invoices.id_quote = quote.id ";
+  $sql= "SELECT I. * , C.name name_client, last_name, C.dni, Q.amount, SC.id_user, U.name, lastname
+  FROM invoices I
+  JOIN clients C ON I.id_client = C.id
+  JOIN quote Q ON I.id_quote = Q.id
+  JOIN service_contract SC ON SC.id_invoice = I.id
+  JOIN users U ON SC.id_user = U.id
+  ";
+  
   $query_invoice= mysqli_query($conn, $sql);
 
 }
@@ -37,9 +42,9 @@ include("./../../api/functions/database.php");
                   <table id="example2" class="table table-bordered table-hover">
                     
                     <tr>
-                      <td>Cedula</td>
-                      <td>Nombre</td>
-                      <td>Apellido</td>
+                      <td>Cedula del cliente</td>
+                      <td colspan=2>Cliente</td>
+                      <td colspan=2>Usuario</td>
                       <td>Cotizacion</td>
                       <td>Total</td>
                       <td>Factura pagada</td>
@@ -51,8 +56,10 @@ include("./../../api/functions/database.php");
                     ?>
                     <tr>
                       <td><? echo $invoice["dni"]?></td>
-                      <td><? echo $invoice["name"]?></td>
+                      <td><? echo $invoice["name_client"]?></td>
                       <td><? echo $invoice["last_name"]?></td>
+                      <td><? echo $invoice["name"]?></td>
+                      <td><? echo $invoice["lastname"]?></td>
                       <td><? echo $invoice["amount"]?> Bs.</td>
                       <td><? echo $invoice["total"]?> $.</td>
                       <td><? echo $invoice["paid_bill"]?></td>
