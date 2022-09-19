@@ -50,26 +50,26 @@ if(!$conn->connect_error){
                       while($users=mysqli_fetch_array($query_users)){
                     ?>
                     <tr>
-                      <td><? echo $users["name"]?></td>
-                      <td><? echo $users["lastname"]?></td>
-                      <td><? echo $users["dni"]?></td>
-                      <td><? echo $users["phone"]?></td>
-                      <td><? echo $users["address"]?></td>
-                      <td><? echo $users["email"]?></td>
-                      <td><? echo $users["rol"]?></td>
-                      <td><? echo $users["functions"]?></td>
-                      <td><? echo $users["f_created"]?></td>
+                      <td><?php echo $users["name"]?></td>
+                      <td><?php echo $users["lastname"]?></td>
+                      <td><?php echo $users["dni"]?></td>
+                      <td><?php echo $users["phone"]?></td>
+                      <td><?php echo $users["address"]?></td>
+                      <td><?php echo $users["email"]?></td>
+                      <td><?php echo $users["rol"]?></td>
+                      <td><?php echo $users["functions"]?></td>
+                      <td><?php echo $users["f_created"]?></td>
                       <td>
                       <form id="edit<?echo $users["id"]?>" action="userRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $users["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $users["id"]?>">
                           <i onclick="edit_(<?echo $users['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                       
                         <form id="delete<?echo $users["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $users["id"]?>">
-                          <i onclick="delete_(<?echo $users['id']?>, '<? echo $users['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $users["id"]?>">
+                          <i onclick="delete_(<?echo $users['id']?>, '<?php echo $users['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                        
                       </td>

@@ -93,16 +93,16 @@ if ($conn->connect_error) {
 ?>
 
 
-  <div class="modal" id="exampleModal<? echo $idCategory?>" tabindex="-1" aria-labelledby="exampleModalLabel" >
+  <div class="modal" id="exampleModal<?php echo $idCategory?>" tabindex="-1" aria-labelledby="exampleModalLabel" >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header btn-<?php echo $color?>">
-          <h5 class="modal-title textUpper" id="exampleModalLabel"><? echo $nameCategory?></h5>
+          <h5 class="modal-title textUpper" id="exampleModalLabel"><?php echo $nameCategory?></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="post" action="?" id="form<? echo $idCategory?>">
+        <form method="post" action="?" id="form<?php echo $idCategory?>">
          <div class="modal-body">
           
             <div class="form-group">
@@ -111,7 +111,7 @@ if ($conn->connect_error) {
 
                 <option value="">-</option>
                 <?php while($services=mysqli_fetch_array($query_services)){?>
-                <option value="<? echo $services["id"]?>"><? echo $services["name"]?></option>
+                <option value="<?php echo $services["id"]?>"><?php echo $services["name"]?></option>
                   <?php }?>
               </select>
             </div>
@@ -121,7 +121,7 @@ if ($conn->connect_error) {
 
                 <option value="">-</option>
                 <?php while($users=mysqli_fetch_array($query_users)){?>
-                <option value="<? echo $users["id"]?>"><? echo $users["name"]?> <? echo $users["lastname"]?></option>
+                <option value="<?php echo $users["id"]?>"><?php echo $users["name"]?> <?php echo $users["lastname"]?></option>
                   <?php }?>
               </select>
             </div>
@@ -134,7 +134,7 @@ if ($conn->connect_error) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary" name="create_contract<? echo $idCategory?>" onClick="createContract(<? echo $idCategory?>)">Registrar contrato</button>
+          <button type="submit" class="btn btn-primary" name="create_contract<?php echo $idCategory?>" onClick="createContract(<?php echo $idCategory?>)">Registrar contrato</button>
         </div>
         </form>
       </div>

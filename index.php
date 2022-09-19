@@ -3,6 +3,7 @@
 <?php 
 include("./components/commons/sideBarComponent.php");
 include("./components/contracts/contractsRegisterComponent.php");
+include("./components/payments/payInvoice.php");
 include("./components/invoices/invoiceDetail.php");
 include("./api/functions/global.php");
 ?>
@@ -103,7 +104,7 @@ include("./api/functions/global.php");
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-  <?php if(isset($alert)){ alert($alert); } ?>
+    <?php if(isset($alert)){ alert($alert); } ?>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -195,29 +196,34 @@ include("./api/functions/global.php");
                         while($invoice=mysqli_fetch_array($query_invoice)){
                           ?>
                           <tr>
-                            <td><? echo $invoice["id"]?></td>
-                            <td><? echo $invoice["dni"]?></td>
-                            <td><? echo $invoice["name_client"]?></td>
-                            <td><? echo $invoice["last_name"]?></td>
-                            <td><? echo $invoice["amount"]?> Bs.</td>
-                            <td><? echo $invoice["total"]?> $.</td>
+                            <td><?php echo $invoice["id"]?></td>
+                            <td><?php echo $invoice["dni"]?></td>
+                            <td><?php echo $invoice["name_client"]?></td>
+                            <td><?php echo $invoice["last_name"]?></td>
+                            <td><?php echo $invoice["amount"]?> Bs.</td>
+                            <td><?php echo $invoice["total"]?> $.</td>
                             <td><small class="badge badge-<?php echo $invoice['rejected'] > 0 ? 'danger' : ($invoice['paid_bill'] == 0 ? 'warning' : 'success'); ?>"> <?php echo $invoice['rejected'] > 0 ? 'anulada' : ($invoice["paid_bill"] == 0 ? 'No Pagada' : 'Pagada')?></small>
                             <td >
-                              <i onClick="viewDetail(<? echo $invoice['id']?>)" class="fas fa-search cursor-over text-primary" title="Ver factura"></i>
+                              <i onClick="viewDetail(<?php echo $invoice['id']?>)" class="fas fa-search cursor-over text-primary" title="Ver factura"></i>
                               <?php if($invoice['rejected'] == 0 && $invoice['paid_bill'] == 0){ ?>
-                                <i onClick="rejectInvoice(<? echo $invoice['id']?>)" class="fas fa-ban cursor-over text-danger" title="Anular factura"></i>
-                                <form id="formReject<? echo $invoice['id']?>" action="?" method="POST">
-                                  <input type="hidden" name="id" value="<? echo $invoice['id']?>">
+                                
+                                <i onClick="rejectInvoice(<?php echo $invoice['id']?>)" class="fas fa-ban cursor-over text-danger" title="Anular factura"></i>
+                                <form id="formReject<?php echo $invoice['id']?>" action="?" method="POST">
+                                  <input type="hidden" name="id" value="<?php echo $invoice['id']?>">
                                   <input type="hidden" name="reject">
                                 </form>
                               
-                              <i class="fas fa-money-check-alt cursor-over text-success" title="Pagar"></i>
+                              <i onClick="openModalPayInvoice(<?php echo $invoice['id']?>)" class="fas fa-money-check-alt cursor-over text-success" title="Pagar factura"></i>
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalpayInvoice<?php echo $invoice['id']?>" data-whatever="@mdo<?php echo $invoice['id']?>">Open modal for @mdo</button>
+                              <?php echo $invoice['id']?>
+                              <?php payClientService($conn, $invoice['id']);?>
+                              
                               <?php }?>
                             </td>
                        
                           </tr>
 
-                          <tr class="itemHidden" id="detailContract<? echo $invoice["id"]?>">
+                          <tr class="itemHidden" id="detailContract<?php echo $invoice["id"]?>">
                             <td colspan="9">
                             <?php echo getInvoiceDetail($conn, $sql, $invoice["id"]);?>
                           </td>
@@ -237,16 +243,20 @@ include("./api/functions/global.php");
                           
                           ?>
               </table>
+              <!-- /.card body -->
               </div>
               
             <!-- /.card -->
+              </div>
           </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          </div>
+          
+
+
+
+
+          <div class="row">
           <section class="col-lg-4 connectedSortable">
-
-
-
           <!-- LISTA DE EMPLEADOS -->
           <div class="card">
               <div class="card-header">
@@ -278,7 +288,7 @@ include("./api/functions/global.php");
                     </div>
                     <!-- todo text -->
                    
-                    <span class="text"><? echo $users["rol"]?> <? echo $users["name"]?> <? echo $users["lastname"]?> </span>
+                    <span class="text"><?php echo $users["rol"]?> <?php echo $users["name"]?> <?php echo $users["lastname"]?> </span>
                     <!-- Emphasis label -->
                     <small class="<?php echo $users['active'] == true ? 'badge badge-primary' : 'badge badge-secondary' ?>"><i class="<?php echo $users['active'] == true ? 'fas fa-user-check' : 'far fa-clock'?>"></i> <?php echo $users['active'] == true ? 'Activo' : 'Inactivo'?></small>
                     <!-- General tools such as edit or delete-->
@@ -294,18 +304,14 @@ include("./api/functions/global.php");
                       } ?>
             </div>
             <!-- /.card -->
+            </div>
           </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-          <section class="col-lg-5 connectedSortable">
-
-
           </div>
-
-            
-
-
-                
+          
+          
+          
+          <div class="row">
+          <section class="col-lg-5 connectedSortable">
 
             <!-- Calendar -->
             <div class="card bg-gradient-success">
@@ -347,13 +353,18 @@ include("./api/functions/global.php");
             </div>
             <!-- /.card -->
           </section>
+          </div>
           <!-- right col -->
-        </div>
+        
         <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
+      <!-- /.container-fluid -->
+    
+      </div>
     </section>
     <!-- /.content -->
+  
   </div>
+</div>
   <!-- /.content-wrapper -->
 
   <script>
@@ -367,6 +378,16 @@ include("./api/functions/global.php");
       $("#detailContract"+id).removeClass("itemHidden");
     }else{
       $("#detailContract"+id).addClass("itemHidden");
+    }
+
+  }
+
+  function openModalPayInvoice(id){
+    
+    if($("#modalpayInvoice"+id).hasClass("itemHidden")){
+      $("#modalpayInvoice"+id).removeClass("itemHidden");
+    }else{
+      $("#modalpayInvoice"+id).addClass("itemHidden");
     }
 
   }

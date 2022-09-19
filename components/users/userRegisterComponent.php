@@ -181,7 +181,7 @@ if(!$conn->connect_error){
                             <?php while($rol=mysqli_fetch_array($query_roles)){?>
 
 
-                              <option <?php echo isset($user) && $user['rol'] == $rol['id']  ? 'selected' : '' ?> value="<? echo $rol["id"]?>"><? echo $rol["name"]?></option>
+                              <option <?php echo isset($user) && $user['rol'] == $rol['id']  ? 'selected' : '' ?> value="<?php echo $rol["id"]?>"><?php echo $rol["name"]?></option>
                             <?php } ?>
                               
                               <!--option value="<!? echo $rol["id"]?>"><!? echo $rol["name"]?></option-->

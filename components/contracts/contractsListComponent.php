@@ -56,13 +56,13 @@ include("./../../api/functions/database.php");
                       <td>
                         <form id="edit<?echo $service_contract["id"]?>" action="contractsRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $service_contract["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $service_contract["id"]?>">
                           <i onclick="edit_(<?echo $service_contract['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                         <form id="delete<?echo $service_contract["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $service_contract["id"]?>">
-                          <i onclick="delete_(<?echo $service_contract['id']?>, '<? echo $service_contract['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $service_contract["id"]?>">
+                          <i onclick="delete_(<?echo $service_contract['id']?>, '<?php echo $service_contract['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>

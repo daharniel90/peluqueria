@@ -55,25 +55,25 @@ include("./../../api/functions/database.php");
                       while($invoice=mysqli_fetch_array($query_invoice)){
                     ?>
                     <tr>
-                      <td><? echo $invoice["dni"]?></td>
-                      <td><? echo $invoice["name_client"]?></td>
-                      <td><? echo $invoice["last_name"]?></td>
-                      <td><? echo $invoice["name"]?></td>
-                      <td><? echo $invoice["lastname"]?></td>
-                      <td><? echo $invoice["amount"]?> Bs.</td>
-                      <td><? echo $invoice["total"]?> $.</td>
-                      <td><? echo $invoice["paid_bill"]?></td>
+                      <td><?php echo $invoice["dni"]?></td>
+                      <td><?php echo $invoice["name_client"]?></td>
+                      <td><?php echo $invoice["last_name"]?></td>
+                      <td><?php echo $invoice["name"]?></td>
+                      <td><?php echo $invoice["lastname"]?></td>
+                      <td><?php echo $invoice["amount"]?> Bs.</td>
+                      <td><?php echo $invoice["total"]?> $.</td>
+                      <td><?php echo $invoice["paid_bill"]?></td>
                       <td>
                         <form id="edit<?echo $invoice["id"]?>" action="invoiceComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $invoice["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $invoice["id"]?>">
                           <i onclick="edit_(<?echo $invoice['id']?>)" class="fas fa-search cursor-over" title="Ver factura"></i>
                         </form>
                       
                         <form id="delete<?echo $invoice["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $invoice["id"]?>">
-                          <i onclick="delete_(<?echo $invoice['id']?>, '<? echo $invoice['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $invoice["id"]?>">
+                          <i onclick="delete_(<?echo $invoice['id']?>, '<?php echo $invoice['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>

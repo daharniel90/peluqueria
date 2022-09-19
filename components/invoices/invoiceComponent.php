@@ -3,6 +3,7 @@ include("./../../components/commons/sideBarComponent.php");
 include("./../../components/commons/menuComponent.php");
 include("./../../api/functions/database.php");
 include("./invoiceDetail.php");
+include("./invoiceTableComponent.php");
 
  $conn = connect();
  
@@ -23,6 +24,7 @@ include("./invoiceDetail.php");
   
   if(mysqli_num_rows($query_invoice) > 0){
     $tableDetail = getInvoiceDetail($conn, $sql, $id);
+    $invoice = mysqli_fetch_array($query_invoice); 
   }
 
 }
@@ -46,34 +48,7 @@ include("./invoiceDetail.php");
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example2" class="table table-borderless">
-                  <?php 
-                      while($invoice=mysqli_fetch_array($query_invoice)){
-                    ?>
-                    <tr>
-                      <td>N# de factura: <? echo $invoice["id"]?></td>
-                      <td>fecha: <? echo $invoice["created_at"]?></td>
-                    </tr>
-                    <tr>
-                      <td>Facturar a: <? echo $invoice["name"]?> <? echo $invoice["last_name"]?></td>
-                    </tr>
-                    <tr>
-                      <td>C.I.: <? echo $invoice["dni"]?></td>
-                    </tr>
-                    <tr>
-                      <td>Direccion: <? echo $invoice["address"]?></td>
-                    </tr>
-                    <tr>
-                      <td>Telefono: <? echo $invoice["phone"]?></td>
-                    </tr>
-                    <?php } ?>
-                    <tr>
-                      <?php echo isset($tableDetail) ? $tableDetail : '<td></td>'?>
-                    </tr>
-                   
-                   
-                    
-                  </table>
+                  <?php echo invoiceTable($invoice, $tableDetail);?>
                 </div>
                 <!-- /.card-body -->
               </div>

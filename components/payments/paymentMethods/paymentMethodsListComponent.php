@@ -14,8 +14,9 @@ include("./../../../api/functions/database.php");
   }
 
   $sql= "SELECT PM.*, B.name bank FROM payment_methods PM
-  JOIN banks B ON PM.id_bank = banks.id
-  ";
+  LEFT JOIN banks B ON PM.id_bank = B.id
+  "; 
+
   $query_payment_methods= mysqli_query($conn, $sql);
 
 }
@@ -42,6 +43,7 @@ include("./../../../api/functions/database.php");
                     <tr>
                       <td>Nombre</td>
                       <td>Banco</td>
+                      <td>Acciones</td>
                     </tr>
                     <?php 
                     while($payment_method=mysqli_fetch_array($query_payment_methods)){
@@ -49,8 +51,11 @@ include("./../../../api/functions/database.php");
                     <tr>
                       <td><?php echo $payment_method['name']?></td>
                       <td><?php echo $payment_method['bank']?></td>
-                          <input type="hidden" name="id" value="<? echo $payment_methodl["id"]?>">
-                          <i onclick="delete_(<?echo $payment_method['id']?>, '<? echo $payment_method['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                      <td>
+                        <form id="delete<?echo $payment_method["id"]?>" action="?" method="POST">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<?php echo $payment_method["id"]?>">
+                          <i onclick="delete_(<?echo $payment_method['id']?>, '<?php echo $payment_method['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
@@ -69,9 +74,7 @@ include("./../../../api/functions/database.php");
 
 </div>
 <script>
-  function edit_(id){
-    $("#edit"+id).submit(); 
-  }
+ 
 
 
   function delete_(id, name){

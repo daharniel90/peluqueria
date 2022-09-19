@@ -48,22 +48,22 @@ if(!$conn->connect_error){
                       while($clients=mysqli_fetch_array($query_clients)){
                     ?>
                     <tr>
-                      <td><? echo $clients["name"]?></td>
-                      <td><? echo $clients["last_name"]?></td>
-                      <td><? echo $clients["dni"]?></td>
-                      <td><? echo $clients["phone"]?></td>
-                      <td><? echo $clients["address"]?></td>
+                      <td><?php echo $clients["name"]?></td>
+                      <td><?php echo $clients["last_name"]?></td>
+                      <td><?php echo $clients["dni"]?></td>
+                      <td><?php echo $clients["phone"]?></td>
+                      <td><?php echo $clients["address"]?></td>
                       <td>
                         <form id="edit<?echo $clients["id"]?>" action="clientRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $clients["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $clients["id"]?>">
                           <i onclick="edit_(<?echo $clients['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                       
                         <form id="delete<?echo $clients["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $clients["id"]?>">
-                          <i onclick="delete_(<?echo $clients['id']?>, '<? echo $clients['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $clients["id"]?>">
+                          <i onclick="delete_(<?echo $clients['id']?>, '<?php echo $clients['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>

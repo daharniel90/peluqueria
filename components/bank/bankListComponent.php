@@ -44,19 +44,19 @@ include("./../../api/functions/database.php");
                       while($bank=mysqli_fetch_array($query_bank)){
                     ?>
                     <tr>
-                      <td><? echo $bank["name"]?></td>
-                      <td><? echo $bank["create_at"]?></td>
+                      <td><?php echo $bank["name"]?></td>
+                      <td><?php echo $bank["create_at"]?></td>
                       <td>
                         <form id="edit<?echo $bank["id"]?>" action="bankRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $bank["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $bank["id"]?>">
                           <i onclick="edit_(<?echo $bank['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                       
                         <form id="delete<?echo $bank["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $bank["id"]?>">
-                          <i onclick="delete_(<?echo $bank['id']?>, '<? echo $bank['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $bank["id"]?>">
+                          <i onclick="delete_(<?echo $bank['id']?>, '<?php echo $bank['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>

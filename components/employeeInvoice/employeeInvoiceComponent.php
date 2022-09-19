@@ -54,20 +54,20 @@ include("./../../api/functions/database.php");
                       while($employee_invoice=mysqli_fetch_array($query_employee_invoice)){
                     ?>
                     <tr>
-                      <td>N# de factura: <? echo $employee_invoice["id"]?></td>
-                      <td>fecha: <? echo $employee_invoice["created_at"]?></td>
+                      <td>N# de factura: <?php echo $employee_invoice["id"]?></td>
+                      <td>fecha: <?php echo $employee_invoice["created_at"]?></td>
                     </tr>
                     <tr>
-                      <td>Facturar a: <? echo $employee_invoice["name"]?> <? echo $employee_invoice["lastname"]?></td>
+                      <td>Facturar a: <?php echo $employee_invoice["name"]?> <?php echo $employee_invoice["lastname"]?></td>
                     </tr>
                     <tr>
-                      <td>C.I.: <? echo $employee_invoice["dni"]?></td>
+                      <td>C.I.: <?php echo $employee_invoice["dni"]?></td>
                     </tr>
                     <tr>
-                      <td>Direccion: <? echo $employee_invoice["address"]?></td>
+                      <td>Direccion: <?php echo $employee_invoice["address"]?></td>
                     </tr>
                     <tr>
-                      <td>Telefono: <? echo $employee_invoice["phone"]?></td>
+                      <td>Telefono: <?php echo $employee_invoice["phone"]?></td>
                     </tr>
                     <?php } ?>
                     <tr>

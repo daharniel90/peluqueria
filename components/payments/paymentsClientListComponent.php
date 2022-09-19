@@ -14,11 +14,10 @@ include("./../../api/functions/database.php");
   }
 
   $sql= "SELECT * FROM payment_client_service PC
-  JOIN service_contract SC ON PC.id_service_contract = SC.id
-  JOIN payment_methodS PM ON PC.id_payment_method = PM.id
-  JOIN clients C ON PC.id_client = C.id";
+  JOIN payment_methods PM ON PC.id_payment_method = PM.id
+  JOIN invoices I ON PC.id_invoice = I.id
+  ";
   $query_payment_client_service= mysqli_query($conn, $sql);
-
 }
 ?>
 
@@ -44,26 +43,31 @@ include("./../../api/functions/database.php");
                     </tr>
 
                     <?php 
+                      if(mysqli_num_rows($query_payment_client_service) > 0){
                       while($payment_client_service=mysqli_fetch_array($query_payment_client_service)){
                     ?>
                     <tr>
-                      <td><? echo $payment_client_service["name"]?></td>
-                      <td><? echo $payment_client_service["created_at"]?></td>
+                      <td><?php echo $payment_client_service["name"]?></td>
+                      <td><?php echo $payment_client_service["created_at"]?></td>
                       <td>
                         <form id="edit<?echo $payment_client_service["id"]?>" action="paymentMethodsRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $payment_client_service["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $payment_client_service["id"]?>">
                           <i onclick="edit_(<?echo $payment_client_service['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                       
                         <form id="delete<?echo $payment_client_service["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $payment_client_service["id"]?>">
-                          <i onclick="delete_(<?echo $payment_client_service['id']?>, '<? echo $payment_client_service['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $payment_client_service["id"]?>">
+                          <i onclick="delete_(<?echo $payment_client_service['id']?>, '<?php echo $payment_client_service['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
-                    <?php } ?>
+                    <?php }}else{ ?>
+                      <tr>
+                      <td colspan="3">No hay pagos de clientes registrados aun.</td>
+                    </tr>
+                      <?php }?>
                    
                    
                     

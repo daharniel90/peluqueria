@@ -131,7 +131,7 @@ if(!$conn->connect_error){
                         <option value="">-</option>
                       <?php while($category=mysqli_fetch_array($query_categories)){?>
                         
-                        <option <?php if(isset($service) && $service['id_category'] == $category['id'] )echo 'selected' ?> value="<? echo $category["id"]?>"><? echo $category["name"]?></option>
+                        <option <?php if(isset($service) && $service['id_category'] == $category['id'] )echo 'selected' ?> value="<?php echo $category["id"]?>"><?php echo $category["name"]?></option>
                       <?php } ?>
                     </select>  
                   </div>

@@ -53,13 +53,13 @@ if(!$conn->connect_error){
                       <td>
                         <form id="edit<?echo $services['id']?>" action="serviceRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $services['id']?>">
+                          <input type="hidden" name="id" value="<?php echo $services['id']?>">
                           <i onclick="edit_(<?echo $services['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                         <form id="delete<?echo $services['id']?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $services['id']?>">
-                          <i onclick="delete_(<?echo $services['id']?>, '<? echo $services['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $services['id']?>">
+                          <i onclick="delete_(<?echo $services['id']?>, '<?php echo $services['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>

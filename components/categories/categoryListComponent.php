@@ -56,7 +56,7 @@ include("./../../api/functions/database.php");
                         <form id="delete<?echo $categories['id']?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
                           <input type="hidden" name="id" value="<?php echo $categories['id']?>">
-                          <i onclick="delete_(<?echo $categories['id']?>, '<? echo $categories['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <i onclick="delete_(<?echo $categories['id']?>, '<?php echo $categories['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>

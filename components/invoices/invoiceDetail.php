@@ -1,6 +1,6 @@
 <?php
 
-function getInvoiceDetail($conn, $sql, $id){
+function getInvoiceDetail($conn, $sql, $id, $type = ''){
 
     if(isset($_POST["delete"])){
       $idServiceDetail = $_POST["id_service"];
@@ -13,7 +13,7 @@ function getInvoiceDetail($conn, $sql, $id){
       $id_sc = $sc[0]['id'];
 
       $sqlDelete="DELETE FROM service_contract WHERE id = $id_sc";
-      $query_delete_service_contract= mysqli_query($conn, $sqlDelete); echo $sql;  echo $sqlDelete;
+      $query_delete_service_contract= mysqli_query($conn, $sqlDelete);
 
 
       if($query_delete_service_contract){
@@ -74,12 +74,18 @@ function getInvoiceDetail($conn, $sql, $id){
                             $id_user_ = $service_contract['id_user'];
                             $id_invoice_ = $service_contract['id_invoice'];
 
-                            $eliminar = "<form id='delete$id_serviceDetail' action='?' method='post'>
-                            <input type='hidden' name='delete' value='delete'>
-                            <input type='hidden' name='id_service' value='$id_serviceDetail'>
-                            <input type='hidden' name='id_user' value='$id_user_'>
-                            <i onclick=\"delete_($id_serviceDetail,'$userName', '$name')\" class='fas fa-minus-circle cursor-over' title='Eliminar'></i>
-                            </form>"; 
+                            if($type !== 'modal'){
+                              $eliminar = "<form id='delete$id_serviceDetail' action='?' method='post'>
+                            
+                              <input type='hidden' name='delete' value='delete'>
+                              <input type='hidden' name='id_service' value='$id_serviceDetail'>
+                              <input type='hidden' name='id_user' value='$id_user_'>
+                              <i onclick=\"delete_($id_serviceDetail,'$userName', '$name')\" class='fas fa-minus-circle cursor-over' title='Eliminar'></i>
+                              </form>";
+                            }else{
+                              $eliminar = '';
+                            }
+                             
                             
                             $tableDetail.="<tr>
                             <td> $name</td>

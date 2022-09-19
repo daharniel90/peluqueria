@@ -53,19 +53,19 @@
                       while($quote=mysqli_fetch_array($query_quote)){
                     ?>
                     <tr>
-                      <td><? echo $quote["amount"]?> Bs.</td>
-                      <td><? echo $quote["date"]?></td>
+                      <td><?php echo $quote["amount"]?> Bs.</td>
+                      <td><?php echo $quote["date"]?></td>
                       <td>
                         <form id="edit<?echo $quote["id"]?>" action="quoteRegisterComponent.php" method="post">
                           <input type="hidden" name="edit" value="edit">
-                          <input type="hidden" name="id" value="<? echo $quote["id"]?>">
+                          <input type="hidden" name="id" value="<?php echo $quote["id"]?>">
                           <i onclick="edit_(<?echo $quote['id']?>)" class="fas fa-edit cursor-over" title="Editar"></i>
                         </form>
                       
                         <form id="delete<?echo $quote["id"]?>" action="?" method="post">
                           <input type="hidden" name="delete" value="delete">
-                          <input type="hidden" name="id" value="<? echo $quote["id"]?>">
-                          <i onclick="delete_(<?echo $quote['id']?>, '<? echo $quote['amount']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                          <input type="hidden" name="id" value="<?php echo $quote["id"]?>">
+                          <i onclick="delete_(<?echo $quote['id']?>, '<?php echo $quote['amount']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
                         </form>
                       </td>
                     </tr>
