@@ -1,0 +1,26 @@
+.mt-60{
+    margin-top: 60px;
+}
+
+.cursor-over{
+    cursor: pointer;
+    float: left;
+    margin-right:2px;
+}
+
+
+.cursor-over:hover{
+    color:#0099ff;
+}
+
+.itemHidden{
+    display: none;
+}
+
+.textUpper{
+    text-transform: capitalize;
+}
+
+.itemBlock{
+    display: block !important;
+}

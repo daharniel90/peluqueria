@@ -1,0 +1,89 @@
+<?php
+include("./../../../components/commons/sideBarComponent.php");
+include("./../../../components/commons/menuComponent.php");
+include("./../../../api/functions/database.php");
+
+ $conn = connect();
+ 
+ if(!$conn->connect_error){
+
+  if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $sql="DELETE FROM payment_methods WHERE id=$id";
+    $query_payment_method_delete= mysqli_query($conn, $sql);
+  }
+
+  $sql= "SELECT PM.*, B.name bank FROM payment_methods PM
+  LEFT JOIN banks B ON PM.id_bank = B.id
+  "; 
+
+  $query_payment_methods= mysqli_query($conn, $sql);
+
+}
+
+
+
+
+
+?>
+
+<div class="content-wrapper">
+
+  <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Listado de métodos de pago</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <tr>
+                      <td>Nombre</td>
+                      <td>Banco</td>
+                      <td>Acciones</td>
+                    </tr>
+                    <?php 
+                    while($payment_method=mysqli_fetch_array($query_payment_methods)){
+                    ?>
+                    <tr>
+                      <td><?php echo $payment_method['name']?></td>
+                      <td><?php echo $payment_method['bank']?></td>
+                      <td>
+                        <form id="delete<?echo $payment_method["id"]?>" action="?" method="POST">
+                          <input type="hidden" name="delete" value="delete">
+                          <input type="hidden" name="id" value="<?php echo $payment_method["id"]?>">
+                          <i onclick="delete_(<?echo $payment_method['id']?>, '<?php echo $payment_method['name']?>')" class="fas fa-trash cursor-over" title="Eliminar"></i>
+                        </form>
+                      </td>
+                    </tr>
+                  
+                   
+                   
+                    <?php } ?>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+            </div>
+          </div>
+        </div>
+  </section>
+
+</div>
+<script>
+ 
+
+
+  function delete_(id, name){
+    if(confirm("Estas seguro de eliminar este metodo de pago "+name+"?")){
+      $("#delete"+id).submit();
+    }  
+  }
+</script>
+<!-- Footer -->
+<?php include("./../../../components/commons/footerComponent.php")?>
+</body>
+</html>
